@@ -8,37 +8,29 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <!-- TÍTULO: Troque "knssfplf" pelo seu username -->
 <title>knssfplf | guns.lol</title>
-<!-- DESCRIÇÃO: Edite para sua bio -->
-<meta name="description" content="my bio link - socials, music, specs & more">
+<meta name="description" content="my bio link - socials, music & more">
 
 <!-- ============================================================
      OPEN GRAPH / EMBEDS — 👇 EDITAR AQUI com seus links e imagem
      ============================================================ -->
 <meta property="og:title" content="knssfplf | guns.lol">
-<meta property="og:description" content="my bio link - socials, music, specs & more">
+<meta property="og:description" content="my bio link - socials, music & more">
 <meta property="og:type" content="website">
 <!-- URL do seu site (depois de deploy) -->
-<meta property="og:url" content="https://guns.lol/knssfplf">
-<!-- IMAGEM DE PREVIEW: hospedar em imgur, discord CDN ou github -->
+<meta property="og:url" content="https://knssfplf.github.io/guns">
+<!-- 👇 EDITAR AQUI: URL da sua foto de perfil -->
 <meta property="og:image" content="https://i.imgur.com/SEU_AVATAR_AQUI.png">
 <meta property="og:image:width" content="400">
 <meta property="og:image:height" content="400">
 <meta name="theme-color" content="#8b5cf6">
 
-<!-- Twitter Card -->
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="knssfplf | guns.lol">
-<meta name="twitter:description" content="my bio link - socials, music, specs & more">
+<meta name="twitter:description" content="my bio link - socials, music & more">
 <meta name="twitter:image" content="https://i.imgur.com/SEU_AVATAR_AQUI.png">
 
-<!-- ============================================================
-     FAVICON — 👇 EDITAR AQUI (ou deixar o emoji)
-     ============================================================ -->
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🔫</text></svg>">
 
-<!-- ============================================================
-     FONTE: Google Fonts (Inter + Poppins)
-     ============================================================ -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -46,10 +38,6 @@
 <style>
 /* ============================================================
    CSS — INÍCIO
-   ============================================================ */
-
-/* ============================================================
-   VARIÁVEIS & TEMA PADRÃO (roxo)
    ============================================================ */
 :root {
   --neon-color: #8b5cf6;
@@ -72,9 +60,6 @@
   --transition-speed: 0.3s;
 }
 
-/* ============================================================
-   TEMA AZUL
-   ============================================================ */
 [data-theme="azul"] {
   --neon-color: #3b82f6;
   --neon-glow: rgba(59, 130, 246, 0.4);
@@ -83,9 +68,6 @@
   --badge-border: rgba(59, 130, 246, 0.2);
 }
 
-/* ============================================================
-   TEMA VERDE
-   ============================================================ */
 [data-theme="verde"] {
   --neon-color: #10b981;
   --neon-glow: rgba(16, 185, 129, 0.4);
@@ -94,9 +76,6 @@
   --badge-border: rgba(16, 185, 129, 0.2);
 }
 
-/* ============================================================
-   TEMA ROSA
-   ============================================================ */
 [data-theme="rosa"] {
   --neon-color: #ec4899;
   --neon-glow: rgba(236, 72, 153, 0.4);
@@ -105,18 +84,8 @@
   --badge-border: rgba(236, 72, 153, 0.2);
 }
 
-/* ============================================================
-   RESET & BASE
-   ============================================================ */
-*, *::before, *::after {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-
-html {
-  scroll-behavior: smooth;
-}
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
 
 body {
   font-family: var(--font-main);
@@ -132,63 +101,39 @@ body {
   position: relative;
 }
 
-/* ============================================================
-   SCANLINES (CRT) — sobreposição sutil
-   ============================================================ */
+/* Scanlines CRT */
 body::after {
   content: '';
   position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
+  top: 0; left: 0;
+  width: 100vw; height: 100vh;
   pointer-events: none;
   z-index: 9999;
-  background: repeating-linear-gradient(
-    0deg,
-    transparent,
-    transparent 2px,
-    rgba(0, 0, 0, 0.08) 2px,
-    rgba(0, 0, 0, 0.08) 4px
-  );
+  background: repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0,0,0,0.08) 2px, rgba(0,0,0,0.08) 4px);
 }
 
-/* ============================================================
-   MATRIX RAIN (MUITO SUTIL)
-   ============================================================ */
 #matrix-canvas {
   position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
+  top: 0; left: 0;
+  width: 100vw; height: 100vh;
   z-index: 0;
   pointer-events: none;
   opacity: 0.05;
 }
 
-/* ============================================================
-   PARTÍCULAS (FLOATING)
-   ============================================================ */
 #particles-canvas {
   position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
+  top: 0; left: 0;
+  width: 100vw; height: 100vh;
   z-index: 0;
   pointer-events: none;
 }
 
-/* ============================================================
-   LOADING SCREEN
-   ============================================================ */
+/* Loading */
 #loading-screen {
   position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
+  top: 0; left: 0;
+  width: 100vw; height: 100vh;
   background: var(--bg-primary);
   display: flex;
   align-items: center;
@@ -196,28 +141,17 @@ body::after {
   z-index: 99999;
   transition: opacity 0.8s ease, visibility 0.8s ease;
 }
-
-#loading-screen.hidden {
-  opacity: 0;
-  visibility: hidden;
-}
-
+#loading-screen.hidden { opacity: 0; visibility: hidden; }
 .loading-spinner {
-  width: 50px;
-  height: 50px;
-  border: 3px solid rgba(139, 92, 246, 0.1);
+  width: 50px; height: 50px;
+  border: 3px solid rgba(139,92,246,0.1);
   border-top-color: var(--neon-color);
   border-radius: 50%;
   animation: spin 0.8s linear infinite;
 }
+@keyframes spin { to { transform: rotate(360deg); } }
 
-@keyframes spin {
-  to { transform: rotate(360deg); }
-}
-
-/* ============================================================
-   CONTAINER PRINCIPAL
-   ============================================================ */
+/* Container */
 .container {
   position: relative;
   z-index: 1;
@@ -227,15 +161,9 @@ body::after {
   padding: 30px 20px;
   animation: fadeInUp 0.6s ease forwards;
 }
+@keyframes fadeInUp { from { opacity:0; transform:translateY(30px); } to { opacity:1; transform:translateY(0); } }
 
-@keyframes fadeInUp {
-  from { opacity: 0; transform: translateY(30px); }
-  to   { opacity: 1; transform: translateY(0); }
-}
-
-/* ============================================================
-   CARD PRINCIPAL (BORDAS NEON + CLIP-PATH)
-   ============================================================ */
+/* Main Card */
 .main-card {
   background: var(--bg-card);
   border: 1px solid var(--badge-border);
@@ -246,92 +174,52 @@ body::after {
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
   transition: border-color var(--transition-speed), box-shadow var(--transition-speed);
-  /* clip-path com cantos cortados estilo diamond sutil */
-  clip-path: polygon(
-    0% 5px,
-    5px 0%,
-    calc(100% - 5px) 0%,
-    100% 5px,
-    100% calc(100% - 5px),
-    calc(100% - 5px) 100%,
-    5px 100%,
-    0% calc(100% - 5px)
-  );
+  clip-path: polygon(0% 5px, 5px 0%, calc(100% - 5px) 0%, 100% 5px, 100% calc(100% - 5px), calc(100% - 5px) 100%, 5px 100%, 0% calc(100% - 5px));
 }
-
 .main-card::before {
   content: '';
   position: absolute;
-  top: -1px;
-  left: -1px;
-  right: -1px;
-  bottom: -1px;
+  top: -1px; left: -1px; right: -1px; bottom: -1px;
   border-radius: 13px;
   background: linear-gradient(135deg, var(--neon-color), transparent, var(--neon-color));
   z-index: -1;
   opacity: 0.3;
   transition: opacity var(--transition-speed);
 }
-
-.main-card:hover::before {
-  opacity: 0.6;
-}
-
-/* ============================================================
-   GRID DE FUNDO (CIRCUITO/TECH)
-   ============================================================ */
+.main-card:hover::before { opacity: 0.6; }
 .main-card::after {
   content: '';
-  position: absolute;
-  inset: 0;
-  background-image:
-    linear-gradient(rgba(139, 92, 246, 0.03) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(139, 92, 246, 0.03) 1px, transparent 1px);
+  position: absolute; inset: 0;
+  background-image: linear-gradient(rgba(139,92,246,0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(139,92,246,0.03) 1px, transparent 1px);
   background-size: 30px 30px;
   pointer-events: none;
   z-index: 0;
 }
 
-/* ============================================================
-   HEADER: AVATAR + NOME + STATUS
-   ============================================================ */
-.header {
-  text-align: center;
-  margin-bottom: 30px;
-  position: relative;
-  z-index: 1;
-}
+/* Header */
+.header { text-align: center; margin-bottom: 30px; position: relative; z-index: 1; }
 
-/* Avatar */
-.avatar-wrapper {
-  position: relative;
-  width: 100px;
-  height: 100px;
-  margin: 0 auto 15px;
-}
+.avatar-wrapper { position: relative; width: 100px; height: 100px; margin: 0 auto 15px; }
 
-/* 👇 EDITAR AQUI: Troque a URL da imagem do avatar */
+/* 👇 EDITAR AQUI: URL da sua foto de perfil */
 .avatar {
-  width: 100%;
-  height: 100%;
+  width: 100%; height: 100%;
   border-radius: 50%;
-  /* background-image: url('https://i.imgur.com/SEU_AVATAR_AQUI.png'); */
-  background-image: url('https://i.pravatar.cc/200'); /* placeholder */
+  background-image: url('https://i.imgur.com/SEU_AVATAR_AQUI.png');
   background-size: cover;
   background-position: center;
   border: 3px solid var(--neon-color);
-  box-shadow: 0 0 20px var(--neon-glow), inset 0 0 20px rgba(139, 92, 246, 0.1);
+  box-shadow: 0 0 20px var(--neon-glow), inset 0 0 20px rgba(139,92,246,0.1);
   animation: pulse-avatar 2s ease-in-out infinite;
   position: relative;
   z-index: 1;
 }
 
 @keyframes pulse-avatar {
-  0%, 100% { box-shadow: 0 0 20px var(--neon-glow), inset 0 0 20px rgba(139, 92, 246, 0.1); }
-  50%      { box-shadow: 0 0 35px var(--neon-glow), inset 0 0 30px rgba(139, 92, 246, 0.2); }
+  0%, 100% { box-shadow: 0 0 20px var(--neon-glow), inset 0 0 20px rgba(139,92,246,0.1); }
+  50% { box-shadow: 0 0 35px var(--neon-glow), inset 0 0 30px rgba(139,92,246,0.2); }
 }
 
-/* Nome / Título com efeito glitch */
 .glitch-title {
   font-family: var(--font-title);
   font-size: 2.2rem;
@@ -344,30 +232,15 @@ body::after {
   cursor: pointer;
   transition: color var(--transition-speed);
 }
-
-.glitch-title::before,
-.glitch-title::after {
+.glitch-title::before, .glitch-title::after {
   content: attr(data-text);
   position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
   pointer-events: none;
 }
-
-.glitch-title::before {
-  color: var(--cyan);
-  z-index: -1;
-  animation: glitch-effect 3s infinite;
-}
-
-.glitch-title::after {
-  color: var(--pink);
-  z-index: -2;
-  animation: glitch-effect 2s infinite reverse;
-}
-
+.glitch-title::before { color: var(--cyan); z-index: -1; animation: glitch-effect 3s infinite; }
+.glitch-title::after { color: var(--pink); z-index: -2; animation: glitch-effect 2s infinite reverse; }
 @keyframes glitch-effect {
   0%, 90%, 100% { transform: translate(0); clip-path: inset(0); }
   92% { transform: translate(-2px, 1px); clip-path: inset(30% 0 40% 0); }
@@ -376,85 +249,41 @@ body::after {
   98% { transform: translate(1px, -2px); clip-path: inset(0% 0 70% 0); }
 }
 
-/* Badge de status online */
 .status-badge {
   display: inline-flex;
   align-items: center;
   gap: 8px;
   margin-top: 8px;
   padding: 4px 16px;
-  background: rgba(34, 197, 94, 0.1);
-  border: 1px solid rgba(34, 197, 94, 0.2);
+  background: rgba(34,197,94,0.1);
+  border: 1px solid rgba(34,197,94,0.2);
   border-radius: 20px;
   font-size: 0.85rem;
   color: var(--green-online);
   font-weight: 500;
 }
-
 .status-dot {
-  width: 8px;
-  height: 8px;
+  width: 8px; height: 8px;
   border-radius: 50%;
   background: var(--green-online);
   box-shadow: 0 0 8px var(--green-glow);
   animation: blink-dot 1.5s ease-in-out infinite;
 }
+@keyframes blink-dot { 0%,100%{opacity:1} 50%{opacity:0.3} }
+.typing-text::after { content:'|'; animation: blink-cursor 0.7s step-end infinite; color:var(--green-online); }
+@keyframes blink-cursor { 50% { opacity:0; } }
 
-@keyframes blink-dot {
-  0%, 100% { opacity: 1; }
-  50%      { opacity: 0.3; }
-}
-
-/* Efeito digitando no status */
-.typing-text::after {
-  content: '|';
-  animation: blink-cursor 0.7s step-end infinite;
-  color: var(--green-online);
-}
-
-@keyframes blink-cursor {
-  50% { opacity: 0; }
-}
-
-/* ============================================================
-   SELETOR DE TEMA
-   ============================================================ */
-.theme-selector {
-  position: fixed;
-  top: 20px;
-  right: 20px;
-  z-index: 100;
-  display: flex;
-  gap: 6px;
-}
-
-.theme-dot {
-  width: 24px;
-  height: 24px;
-  border-radius: 50%;
-  border: 2px solid rgba(255,255,255,0.15);
-  cursor: pointer;
-  transition: transform 0.2s, border-color 0.2s, box-shadow 0.2s;
-}
-
-.theme-dot:hover {
-  transform: scale(1.2);
-  border-color: rgba(255,255,255,0.5);
-}
-
-.theme-dot.active {
-  border-color: white;
-  box-shadow: 0 0 12px rgba(255,255,255,0.3);
-}
-
-.theme-dot[data-theme="roxo"]  { background: #8b5cf6; }
-.theme-dot[data-theme="azul"]  { background: #3b82f6; }
+/* Theme Selector */
+.theme-selector { position: fixed; top: 20px; right: 20px; z-index: 100; display: flex; gap: 6px; }
+.theme-dot { width: 24px; height: 24px; border-radius: 50%; border: 2px solid rgba(255,255,255,0.15); cursor: pointer; transition: transform 0.2s, border-color 0.2s, box-shadow 0.2s; }
+.theme-dot:hover { transform: scale(1.2); border-color: rgba(255,255,255,0.5); }
+.theme-dot.active { border-color: white; box-shadow: 0 0 12px rgba(255,255,255,0.3); }
+.theme-dot[data-theme="roxo"] { background: #8b5cf6; }
+.theme-dot[data-theme="azul"] { background: #3b82f6; }
 .theme-dot[data-theme="verde"] { background: #10b981; }
-.theme-dot[data-theme="rosa"]  { background: #ec4899; }
+.theme-dot[data-theme="rosa"] { background: #ec4899; }
 
-/* ============================================================
-   BADGES — ESTILO GERAL
-   ============================================================ */
+/* Badges */
 .badge {
   background: var(--badge-bg);
   border: 1px solid var(--badge-border);
@@ -468,58 +297,26 @@ body::after {
   display: block;
   width: 100%;
 }
-
 .badge:hover {
   transform: scale(1.02);
   border-color: var(--neon-color);
   box-shadow: 0 0 20px var(--neon-glow-soft), inset 0 0 20px var(--neon-glow-soft);
 }
+.badge-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px; }
+.badge-title { font-family: var(--font-title); font-size: 0.75rem; text-transform: uppercase; letter-spacing: 1.5px; color: var(--text-secondary); font-weight: 600; }
+.badge-content { font-size: 0.95rem; color: var(--text-primary); line-height: 1.5; }
 
-.badge-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-bottom: 10px;
-}
+.badge-cyan { --badge-bg: rgba(6,182,212,0.08); --badge-border: rgba(6,182,212,0.2); }
+.badge-cyan:hover { box-shadow: 0 0 20px rgba(6,182,212,0.15), inset 0 0 20px rgba(6,182,212,0.08); border-color: var(--cyan); }
+.badge-green { --badge-bg: rgba(34,197,94,0.08); --badge-border: rgba(34,197,94,0.2); }
+.badge-green:hover { box-shadow: 0 0 20px rgba(34,197,94,0.15), inset 0 0 20px rgba(34,197,94,0.08); border-color: var(--green); }
+.badge-pink { --badge-bg: rgba(236,72,153,0.08); --badge-border: rgba(236,72,153,0.2); }
+.badge-pink:hover { box-shadow: 0 0 20px rgba(236,72,153,0.15), inset 0 0 20px rgba(236,72,153,0.08); border-color: var(--pink); }
 
-.badge-title {
-  font-family: var(--font-title);
-  font-size: 0.75rem;
-  text-transform: uppercase;
-  letter-spacing: 1.5px;
-  color: var(--text-secondary);
-  font-weight: 600;
-}
-
-.badge-content {
-  font-size: 0.95rem;
-  color: var(--text-primary);
-  line-height: 1.5;
-}
-
-/* Badge com cor específica */
-.badge-cyan  { --badge-bg: rgba(6, 182, 212, 0.08); --badge-border: rgba(6, 182, 212, 0.2); }
-.badge-cyan:hover { box-shadow: 0 0 20px rgba(6, 182, 212, 0.15), inset 0 0 20px rgba(6, 182, 212, 0.08); border-color: var(--cyan); }
-
-.badge-green  { --badge-bg: rgba(34, 197, 94, 0.08); --badge-border: rgba(34, 197, 94, 0.2); }
-.badge-green:hover { box-shadow: 0 0 20px rgba(34, 197, 94, 0.15), inset 0 0 20px rgba(34, 197, 94, 0.08); border-color: var(--green); }
-
-.badge-pink  { --badge-bg: rgba(236, 72, 153, 0.08); --badge-border: rgba(236, 72, 153, 0.2); }
-.badge-pink:hover { box-shadow: 0 0 20px rgba(236, 72, 153, 0.15), inset 0 0 20px rgba(236, 72, 153, 0.08); border-color: var(--pink); }
-
-/* ============================================================
-   BADGE: SOCIALS
-   ============================================================ */
-.socials-grid {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
-  justify-content: center;
-}
-
+/* Socials */
+.socials-grid { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; }
 .social-icon {
-  width: 40px;
-  height: 40px;
+  width: 40px; height: 40px;
   border-radius: 8px;
   background: rgba(255,255,255,0.05);
   border: 1px solid rgba(255,255,255,0.08);
@@ -532,14 +329,12 @@ body::after {
   transition: all 0.2s ease;
   position: relative;
 }
-
 .social-icon:hover {
   background: var(--badge-bg);
   border-color: var(--neon-color);
   transform: translateY(-3px);
   box-shadow: 0 4px 15px var(--neon-glow-soft);
 }
-
 .social-icon .tooltip {
   position: absolute;
   bottom: calc(100% + 8px);
@@ -556,25 +351,12 @@ body::after {
   transition: all 0.2s ease;
   border: 1px solid rgba(255,255,255,0.1);
 }
+.social-icon:hover .tooltip { opacity: 1; transform: translateX(-50%) scale(1); }
 
-.social-icon:hover .tooltip {
-  opacity: 1;
-  transform: translateX(-50%) scale(1);
-}
-
-/* ============================================================
-   BADGE: MUSIC PLAYER
-   ============================================================ */
-.music-player {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  flex-wrap: wrap;
-}
-
+/* Music Player */
+.music-player { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
 .music-btn {
-  width: 36px;
-  height: 36px;
+  width: 36px; height: 36px;
   border-radius: 50%;
   border: 1px solid var(--badge-border);
   background: rgba(255,255,255,0.05);
@@ -587,167 +369,33 @@ body::after {
   transition: all 0.2s;
   flex-shrink: 0;
 }
-
 .music-btn:hover {
   background: var(--badge-bg);
   border-color: var(--neon-color);
   box-shadow: 0 0 12px var(--neon-glow-soft);
 }
+.music-info { flex: 1; min-width: 0; }
+.music-title { font-size: 0.85rem; font-weight: 500; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.music-artist { font-size: 0.7rem; color: var(--text-secondary); }
+.wave-visualizer { display: flex; align-items: center; gap: 2px; height: 24px; flex-shrink: 0; }
+.wave-bar { width: 3px; background: var(--neon-color); border-radius: 2px; animation: wave-anim 0.5s ease-in-out infinite alternate; }
+.wave-bar:nth-child(1) { height:8px; animation-delay:0s; }
+.wave-bar:nth-child(2) { height:14px; animation-delay:0.1s; }
+.wave-bar:nth-child(3) { height:20px; animation-delay:0.2s; }
+.wave-bar:nth-child(4) { height:16px; animation-delay:0.3s; }
+.wave-bar:nth-child(5) { height:22px; animation-delay:0.15s; }
+.wave-bar:nth-child(6) { height:12px; animation-delay:0.25s; }
+.wave-bar:nth-child(7) { height:18px; animation-delay:0.05s; }
+.wave-bar:nth-child(8) { height:10px; animation-delay:0.35s; }
+.wave-bar.paused { animation-play-state: paused; height: 3px; }
+@keyframes wave-anim { from { transform: scaleY(0.5); } to { transform: scaleY(1); } }
 
-.music-info {
-  flex: 1;
-  min-width: 0;
-}
-
-.music-title {
-  font-size: 0.85rem;
-  font-weight: 500;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
-.music-artist {
-  font-size: 0.7rem;
-  color: var(--text-secondary);
-}
-
-/* Visualizador de onda */
-.wave-visualizer {
-  display: flex;
-  align-items: center;
-  gap: 2px;
-  height: 24px;
-  flex-shrink: 0;
-}
-
-.wave-bar {
-  width: 3px;
-  background: var(--neon-color);
-  border-radius: 2px;
-  animation: wave-anim 0.5s ease-in-out infinite alternate;
-}
-
-.wave-bar:nth-child(1) { height: 8px; animation-delay: 0s; }
-.wave-bar:nth-child(2) { height: 14px; animation-delay: 0.1s; }
-.wave-bar:nth-child(3) { height: 20px; animation-delay: 0.2s; }
-.wave-bar:nth-child(4) { height: 16px; animation-delay: 0.3s; }
-.wave-bar:nth-child(5) { height: 22px; animation-delay: 0.15s; }
-.wave-bar:nth-child(6) { height: 12px; animation-delay: 0.25s; }
-.wave-bar:nth-child(7) { height: 18px; animation-delay: 0.05s; }
-.wave-bar:nth-child(8) { height: 10px; animation-delay: 0.35s; }
-
-.wave-bar.paused {
-  animation-play-state: paused;
-  height: 3px;
-}
-
-@keyframes wave-anim {
-  from { transform: scaleY(0.5); }
-  to   { transform: scaleY(1); }
-}
-
-/* ============================================================
-   BADGE: PC SPECS (COLLAPSIBLE)
-   ============================================================ */
-.specs-toggle {
-  cursor: pointer;
-  user-select: none;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-
-.specs-toggle::after {
-  content: '▼';
-  font-size: 0.7rem;
-  color: var(--text-secondary);
-  transition: transform 0.3s;
-}
-
-.specs-toggle.active::after {
-  transform: rotate(180deg);
-}
-
-.specs-content {
-  max-height: 0;
-  overflow: hidden;
-  transition: max-height 0.4s ease, opacity 0.3s ease, padding 0.3s ease;
-  opacity: 0;
-  padding-top: 0;
-}
-
-.specs-content.open {
-  max-height: 400px;
-  opacity: 1;
-  padding-top: 12px;
-}
-
-.specs-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 8px;
-}
-
-.spec-item {
-  display: flex;
-  flex-direction: column;
-  padding: 8px 10px;
-  background: rgba(255,255,255,0.03);
-  border-radius: 6px;
-  border: 1px solid rgba(255,255,255,0.05);
-}
-
-.spec-label {
-  font-size: 0.65rem;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-  color: var(--text-secondary);
-  margin-bottom: 2px;
-}
-
-.spec-value {
-  font-size: 0.85rem;
-  font-weight: 500;
-}
-
-/* ============================================================
-   BADGE: CONTACT (CLIPBOARD)
-   ============================================================ */
-.contact-btn {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  padding: 8px 16px;
-  border-radius: 6px;
-  background: rgba(255,255,255,0.05);
-  border: 1px solid rgba(255,255,255,0.08);
-  color: var(--text-primary);
-  cursor: pointer;
-  font-family: var(--font-main);
-  font-size: 0.85rem;
-  transition: all 0.2s;
-}
-
-.contact-btn:hover {
-  background: var(--badge-bg);
-  border-color: var(--neon-color);
-}
-
-.contact-btn.copied {
-  background: rgba(34, 197, 94, 0.15);
-  border-color: var(--green);
-  color: var(--green);
-}
-
-/* ============================================================
-   BOTÃO SHARE
-   ============================================================ */
+/* Share */
 .share-btn {
   padding: 8px 16px;
   border-radius: 6px;
-  background: rgba(139, 92, 246, 0.1);
-  border: 1px solid rgba(139, 92, 246, 0.2);
+  background: rgba(139,92,246,0.1);
+  border: 1px solid rgba(139,92,246,0.2);
   color: var(--neon-color);
   cursor: pointer;
   font-family: var(--font-main);
@@ -757,61 +405,18 @@ body::after {
   align-items: center;
   gap: 6px;
 }
+.share-btn:hover { background: rgba(139,92,246,0.2); box-shadow: 0 0 15px var(--neon-glow-soft); }
 
-.share-btn:hover {
-  background: rgba(139, 92, 246, 0.2);
-  box-shadow: 0 0 15px var(--neon-glow-soft);
-}
+/* Footer */
+.footer { text-align: center; padding: 20px 0 10px; position: relative; z-index: 1; }
+.footer-clock { font-family: var(--font-title); font-size: 1.2rem; font-weight: 600; color: var(--text-primary); letter-spacing: 3px; }
+.footer-date { font-size: 0.75rem; color: var(--text-secondary); margin-top: 4px; text-transform: uppercase; letter-spacing: 1px; }
+.footer-visits { font-size: 0.7rem; color: var(--text-secondary); margin-top: 10px; opacity: 0.7; }
 
-/* ============================================================
-   FOOTER — RELÓGIO DIGITAL
-   ============================================================ */
-.footer {
-  text-align: center;
-  padding: 20px 0 10px;
-  position: relative;
-  z-index: 1;
-}
-
-.footer-clock {
-  font-family: var(--font-title);
-  font-size: 1.2rem;
-  font-weight: 600;
-  color: var(--text-primary);
-  letter-spacing: 3px;
-}
-
-.footer-date {
-  font-size: 0.75rem;
-  color: var(--text-secondary);
-  margin-top: 4px;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-}
-
-.footer-visits {
-  font-size: 0.7rem;
-  color: var(--text-secondary);
-  margin-top: 10px;
-  opacity: 0.7;
-}
-
-/* ============================================================
-   TOGGLE NEVE/CHUVA
-   ============================================================ */
-.toggle-btn-container {
-  position: fixed;
-  bottom: 20px;
-  right: 20px;
-  z-index: 100;
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-}
-
+/* Toggles */
+.toggle-btn-container { position: fixed; bottom: 20px; right: 20px; z-index: 100; display: flex; flex-direction: column; gap: 6px; }
 .toggle-btn {
-  width: 36px;
-  height: 36px;
+  width: 36px; height: 36px;
   border-radius: 50%;
   border: 1px solid rgba(255,255,255,0.1);
   background: rgba(0,0,0,0.6);
@@ -824,27 +429,16 @@ body::after {
   transition: all 0.2s;
   backdrop-filter: blur(8px);
 }
+.toggle-btn:hover { border-color: var(--neon-color); color: var(--text-primary); }
+.toggle-btn.active { border-color: var(--neon-color); color: var(--neon-color); box-shadow: 0 0 10px var(--neon-glow-soft); }
 
-.toggle-btn:hover {
-  border-color: var(--neon-color);
-  color: var(--text-primary);
-}
-
-.toggle-btn.active {
-  border-color: var(--neon-color);
-  color: var(--neon-color);
-  box-shadow: 0 0 10px var(--neon-glow-soft);
-}
-
-/* ============================================================
-   TOAST NOTIFICATION
-   ============================================================ */
+/* Toast */
 .toast {
   position: fixed;
   bottom: 30px;
   left: 50%;
   transform: translateX(-50%) translateY(100px);
-  background: rgba(0, 0, 0, 0.9);
+  background: rgba(0,0,0,0.9);
   color: var(--text-primary);
   padding: 10px 24px;
   border-radius: 8px;
@@ -857,33 +451,7 @@ body::after {
   pointer-events: none;
   white-space: nowrap;
 }
-
-.toast.show {
-  opacity: 1;
-  transform: translateX(-50%) translateY(0);
-}
-
-/* ============================================================
-   RESPONSIVIDADE
-   ============================================================ */
-@media (max-width: 640px) {
-  body { padding: 10px; }
-  .container { padding: 15px 10px; }
-  .main-card { padding: 25px 16px; }
-  .glitch-title { font-size: 1.6rem; }
-  .avatar-wrapper { width: 80px; height: 80px; }
-  .specs-grid { grid-template-columns: 1fr; }
-  .socials-grid { gap: 8px; }
-  .social-icon { width: 36px; height: 36px; font-size: 1rem; }
-  .theme-selector { top: 10px; right: 10px; }
-  .theme-dot { width: 20px; height: 20px; }
-}
-
-@media (max-width: 380px) {
-  .glitch-title { font-size: 1.3rem; }
-  .avatar-wrapper { width: 65px; height: 65px; }
-  .main-card { padding: 20px 12px; }
-}
+.toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
 
 /* ============================================================
    PAINEL ADMIN OCULTO (SÓ O DONO VÊ)
@@ -901,24 +469,19 @@ body::after {
   justify-content: center;
   padding: 20px;
 }
-
-.admin-overlay.open {
-  display: flex;
-}
-
+.admin-overlay.open { display: flex; }
 .admin-panel {
   background: #0a0a0a;
   border: 1px solid var(--neon-color);
   border-radius: 12px;
   padding: 30px;
-  max-width: 700px;
+  max-width: 750px;
   width: 100%;
-  max-height: 80vh;
+  max-height: 85vh;
   overflow-y: auto;
   position: relative;
   box-shadow: 0 0 40px var(--neon-glow);
 }
-
 .admin-panel h2 {
   font-family: var(--font-title);
   font-size: 1.2rem;
@@ -929,26 +492,33 @@ body::after {
   border-bottom: 1px solid var(--badge-border);
   padding-bottom: 10px;
 }
-
 .admin-panel .close-btn {
   position: absolute;
-  top: 15px;
-  right: 15px;
+  top: 15px; right: 15px;
   background: none;
   border: 1px solid var(--badge-border);
   color: var(--text-secondary);
-  width: 30px;
-  height: 30px;
+  width: 30px; height: 30px;
   border-radius: 50%;
   cursor: pointer;
   font-size: 1rem;
   transition: all 0.2s;
 }
+.admin-panel .close-btn:hover { color: #ff4444; border-color: #ff4444; }
 
-.admin-panel .close-btn:hover {
-  color: #ff4444;
-  border-color: #ff4444;
+/* Status do Firebase */
+.admin-fb-status {
+  padding: 10px 14px;
+  border-radius: 6px;
+  font-size: 0.8rem;
+  margin-bottom: 12px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
 }
+.admin-fb-status.ok { background: rgba(34,197,94,0.1); border: 1px solid rgba(34,197,94,0.2); color: var(--green); }
+.admin-fb-status.err { background: rgba(255,68,68,0.1); border: 1px solid rgba(255,68,68,0.2); color: #ff4444; }
+.admin-fb-status.warn { background: rgba(255,165,0,0.1); border: 1px solid rgba(255,165,0,0.2); color: orange; }
 
 .admin-log-entry {
   background: rgba(255,255,255,0.03);
@@ -959,30 +529,12 @@ body::after {
   font-size: 0.8rem;
   font-family: 'Courier New', monospace;
 }
-
-.admin-log-entry .log-ip {
-  color: var(--neon-color);
-  font-weight: 600;
-}
-
-.admin-log-entry .log-time {
-  color: var(--text-secondary);
-  font-size: 0.7rem;
-}
-
-.admin-log-entry .log-location {
-  color: var(--cyan);
-}
-
-.admin-log-entry .log-device {
-  color: var(--pink);
-  font-size: 0.7rem;
-}
-
-.admin-log-entry .log-ref {
-  color: var(--green);
-  font-size: 0.7rem;
-}
+.admin-log-entry .log-ip { color: var(--neon-color); font-weight: 600; }
+.admin-log-entry .log-time { color: var(--text-secondary); font-size: 0.7rem; }
+.admin-log-entry .log-location { color: var(--cyan); }
+.admin-log-entry .log-device { color: var(--pink); font-size: 0.7rem; }
+.admin-log-entry .log-ref { color: var(--green); font-size: 0.7rem; }
+.admin-log-entry .log-isp { color: var(--text-secondary); font-size: 0.7rem; }
 
 .admin-stats {
   display: grid;
@@ -990,7 +542,6 @@ body::after {
   gap: 10px;
   margin-bottom: 15px;
 }
-
 .admin-stat-card {
   background: rgba(255,255,255,0.03);
   border-radius: 6px;
@@ -998,38 +549,17 @@ body::after {
   text-align: center;
   border: 1px solid rgba(255,255,255,0.06);
 }
-
-.admin-stat-card .stat-value {
-  font-size: 1.5rem;
-  font-weight: 700;
-  color: var(--neon-color);
-}
-
-.admin-stat-card .stat-label {
-  font-size: 0.65rem;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-  color: var(--text-secondary);
-  margin-top: 4px;
-}
+.admin-stat-card .stat-value { font-size: 1.5rem; font-weight: 700; color: var(--neon-color); }
+.admin-stat-card .stat-label { font-size: 0.65rem; text-transform: uppercase; letter-spacing: 1px; color: var(--text-secondary); margin-top: 4px; }
 
 .admin-config {
-  margin-top: 15px;
+  margin-top: 12px;
   padding: 12px;
   background: rgba(255,255,255,0.02);
   border-radius: 6px;
   border: 1px solid rgba(255,255,255,0.06);
 }
-
-.admin-config label {
-  font-size: 0.75rem;
-  color: var(--text-secondary);
-  text-transform: uppercase;
-  letter-spacing: 1px;
-  display: block;
-  margin-bottom: 4px;
-}
-
+.admin-config label { font-size: 0.75rem; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 1px; display: block; margin-bottom: 4px; }
 .admin-config input {
   width: 100%;
   padding: 8px 12px;
@@ -1041,12 +571,7 @@ body::after {
   font-size: 0.8rem;
   margin-bottom: 8px;
 }
-
-.admin-config input:focus {
-  outline: none;
-  border-color: var(--neon-color);
-}
-
+.admin-config input:focus { outline: none; border-color: var(--neon-color); }
 .admin-btn {
   padding: 6px 14px;
   border-radius: 4px;
@@ -1058,65 +583,43 @@ body::after {
   transition: all 0.2s;
   font-family: var(--font-main);
 }
+.admin-btn:hover { background: var(--badge-bg); border-color: var(--neon-color); }
+.admin-btn.danger { border-color: rgba(255,68,68,0.3); color: #ff4444; }
+.admin-btn.danger:hover { background: rgba(255,68,68,0.1); border-color: #ff4444; }
+.admin-btn.success { border-color: rgba(34,197,94,0.3); color: var(--green); }
+.admin-btn.success:hover { background: rgba(34,197,94,0.1); }
 
-.admin-btn:hover {
-  background: var(--badge-bg);
-  border-color: var(--neon-color);
-}
-
-.admin-btn.danger {
-  border-color: rgba(255,68,68,0.3);
-  color: #ff4444;
-}
-
-.admin-btn.danger:hover {
-  background: rgba(255,68,68,0.1);
-  border-color: #ff4444;
-}
-
-/* Indicador secreto no footer (invisível) */
-.admin-secret-trigger {
-  position: fixed;
-  bottom: 0;
-  right: 0;
-  width: 1px;
-  height: 1px;
-  opacity: 0;
-  cursor: default;
-  pointer-events: none;
-}
-
-/* ============================================================
-   SCROLLBAR PERSONALIZADA
-   ============================================================ */
+/* Scrollbar */
 ::-webkit-scrollbar { width: 6px; }
 ::-webkit-scrollbar-track { background: var(--bg-primary); }
 ::-webkit-scrollbar-thumb { background: var(--badge-border); border-radius: 3px; }
 ::-webkit-scrollbar-thumb:hover { background: var(--neon-color); }
+
+/* Responsivo */
+@media (max-width: 640px) {
+  body { padding: 10px; }
+  .container { padding: 15px 10px; }
+  .main-card { padding: 25px 16px; }
+  .glitch-title { font-size: 1.6rem; }
+  .avatar-wrapper { width: 80px; height: 80px; }
+  .socials-grid { gap: 8px; }
+  .social-icon { width: 36px; height: 36px; font-size: 1rem; }
+  .theme-selector { top: 10px; right: 10px; }
+  .theme-dot { width: 20px; height: 20px; }
+}
+@media (max-width: 380px) {
+  .glitch-title { font-size: 1.3rem; }
+  .avatar-wrapper { width: 65px; height: 65px; }
+  .main-card { padding: 20px 12px; }
+}
 </style>
 </head>
 <body>
 
-<!-- ============================================================
-     LOADING SCREEN
-     ============================================================ -->
-<div id="loading-screen">
-  <div class="loading-spinner"></div>
-</div>
-
-<!-- ============================================================
-     MATRIX RAIN CANVAS (MUITO SUTIL)
-     ============================================================ -->
+<div id="loading-screen"><div class="loading-spinner"></div></div>
 <canvas id="matrix-canvas"></canvas>
-
-<!-- ============================================================
-     PARTÍCULAS CANVAS
-     ============================================================ -->
 <canvas id="particles-canvas"></canvas>
 
-<!-- ============================================================
-     SELETOR DE TEMAS
-     ============================================================ -->
 <div class="theme-selector">
   <div class="theme-dot active" data-theme="roxo" title="Roxo"></div>
   <div class="theme-dot" data-theme="azul" title="Azul"></div>
@@ -1124,50 +627,36 @@ body::after {
   <div class="theme-dot" data-theme="rosa" title="Rosa"></div>
 </div>
 
-<!-- ============================================================
-     TOGGLES (NEVE)
-     ============================================================ -->
 <div class="toggle-btn-container">
-  <button class="toggle-btn" id="snow-toggle" title="Ativar/Desativar neve">❄️</button>
+  <button class="toggle-btn" id="snow-toggle" title="Ativar/Desativar efeito">❄️</button>
 </div>
 
-<!-- ============================================================
-     TOAST
-     ============================================================ -->
 <div class="toast" id="toast"></div>
 
-<!-- ============================================================
-     CONTAINER PRINCIPAL
-     ============================================================ -->
-<div class="container">
+<!-- YouTube Player Oculto (só áudio) -->
+<div id="yt-player" style="position:absolute;width:0;height:0;overflow:hidden;opacity:0;pointer-events:none;"></div>
 
-  <!-- ==================== MAIN CARD ==================== -->
+<div class="container">
   <div class="main-card">
 
-    <!-- ==================== HEADER ==================== -->
+    <!-- HEADER -->
     <div class="header">
       <div class="avatar-wrapper">
-        <!-- 👇 EDITAR AQUI: URL do seu avatar -->
-        <div class="avatar" style="background-image: url('https://i.pravatar.cc/200');"></div>
+        <!-- 👇 EDITAR AQUI: URL da sua foto de perfil (a que vc me enviou) -->
+        <div class="avatar" style="background-image: url('https://i.imgur.com/SEU_AVATAR_AQUI.png');"></div>
       </div>
-
-      <!-- 👇 EDITAR AQUI: Seu nome de usuário -->
       <h1 class="glitch-title" data-text="knssfplf">knssfplf</h1>
-
       <div class="status-badge">
         <span class="status-dot"></span>
         <span class="typing-text" id="typing-status">online</span>
       </div>
     </div>
 
-    <!-- ==================== BADGE: SOCIALS ==================== -->
+    <!-- SOCIALS -->
     <div class="badge badge-cyan">
-      <div class="badge-header">
-        <span class="badge-title">✦ Socials</span>
-      </div>
+      <div class="badge-header"><span class="badge-title">✦ Socials</span></div>
       <div class="badge-content">
         <div class="socials-grid">
-          <!-- 👇 EDITAR AQUI: Links das redes sociais -->
           <a href="https://steamcommunity.com/profiles/76561199658376471/" target="_blank" rel="noopener" class="social-icon">
             <span class="tooltip">Steam</span>
             <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M11.5 22c-.8 0-1.6-.2-2.3-.5l3.5-2.8c1-.2 1.9-.8 2.5-1.7.6-.8.8-1.8.7-2.8l4.2-3.1c.6 0 1.2.2 1.6.6.7.7.8 1.8.2 2.6l-4.5 6.2c-.8 1.2-2.2 1.9-3.7 2l-.2.5z"/><circle cx="11" cy="11" r="7"/></svg>
@@ -1184,45 +673,33 @@ body::after {
       </div>
     </div>
 
-    <!-- ==================== BADGE: CURRENTLY PLAYING ==================== -->
+    <!-- CURRENTLY PLAYING -->
     <div class="badge">
-      <div class="badge-header">
-        <span class="badge-title">🎮 Currently Playing</span>
-      </div>
+      <div class="badge-header"><span class="badge-title">🎮 Currently Playing</span></div>
       <div class="badge-content" id="current-game">
-        <!-- 👇 EDITAR AQUI: Nome do jogo (estático ou via API) -->
-        <span style="display:flex; align-items:center; gap:8px;">
-          <span>🎮</span>
-          <span id="game-name">Carregando...</span>
-        </span>
+        <span style="display:flex; align-items:center; gap:8px;"><span>🎮</span><span id="game-name">Counter-Strike 2</span></span>
       </div>
     </div>
 
-    <!-- ==================== BADGE: COMMISSIONS ==================== -->
+    <!-- COMMISSIONS -->
     <div class="badge badge-green">
-      <div class="badge-header">
-        <span class="badge-title">💰 Commissions</span>
-      </div>
+      <div class="badge-header"><span class="badge-title">💰 Commissions</span></div>
       <div class="badge-content" style="color: var(--green); font-weight: 600;">
-        <!-- 👇 EDITAR AQUI: Status das comissões -->
         <span id="commission-status">✦ Open</span>
       </div>
     </div>
 
-    <!-- ==================== BADGE: MUSIC ==================== -->
+    <!-- MUSIC (YouTube Lo-fi) -->
     <div class="badge badge-pink">
-      <div class="badge-header">
-        <span class="badge-title">🎵 Music</span>
-      </div>
+      <div class="badge-header"><span class="badge-title">🎵 Music</span></div>
       <div class="badge-content">
         <div class="music-player">
           <button class="music-btn" id="music-toggle" title="Play/Pause">
             <span id="music-icon">▶</span>
           </button>
           <div class="music-info">
-            <!-- 👇 EDITAR AQUI: Nome da música/artista -->
-            <div class="music-title" id="music-title">Lo-fi Beats</div>
-            <div class="music-artist" id="music-artist">unknown</div>
+            <div class="music-title" id="music-title">Lo-fi Radio</div>
+            <div class="music-artist" id="music-artist">youtube</div>
           </div>
           <div class="wave-visualizer" id="wave-visualizer">
             <div class="wave-bar paused"></div>
@@ -1238,13 +715,10 @@ body::after {
       </div>
     </div>
 
-    <!-- ==================== BADGE: WALLPAPER ==================== -->
+    <!-- WALLPAPER -->
     <div class="badge badge-cyan">
-      <div class="badge-header">
-        <span class="badge-title">🖼️ Wallpaper</span>
-      </div>
+      <div class="badge-header"><span class="badge-title">🖼️ Wallpaper</span></div>
       <div class="badge-content">
-        <!-- 👇 EDITAR AQUI: Link do wallpaper (Wallpaper Engine ou imagem) -->
         <a href="https://steamcommunity.com/sharedfiles/filedetails/?id=SEU_WALLPAPER_ID" target="_blank" rel="noopener" style="color: var(--cyan); text-decoration: none; display: flex; align-items: center; gap: 8px;">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
           <span>Download Wallpaper</span>
@@ -1252,53 +726,9 @@ body::after {
       </div>
     </div>
 
-    <!-- ==================== BADGE: PC SPECS ==================== -->
-    <div class="badge" id="specs-badge">
-      <div class="badge-header">
-        <span class="badge-title">🖥️ PC Specs</span>
-      </div>
-      <div class="badge-content specs-toggle" id="specs-toggle">
-        <span>Clique para expandir</span>
-      </div>
-      <div class="specs-content" id="specs-content">
-        <div class="specs-grid">
-          <!-- 👇 EDITAR AQUI: Especificações do PC -->
-          <div class="spec-item"><span class="spec-label">CPU</span><span class="spec-value" id="spec-cpu">-</span></div>
-          <div class="spec-item"><span class="spec-label">GPU</span><span class="spec-value" id="spec-gpu">-</span></div>
-          <div class="spec-item"><span class="spec-label">RAM</span><span class="spec-value" id="spec-ram">-</span></div>
-          <div class="spec-item"><span class="spec-label">Monitor</span><span class="spec-value" id="spec-monitor">-</span></div>
-          <div class="spec-item"><span class="spec-label">Mouse</span><span class="spec-value" id="spec-mouse">-</span></div>
-          <div class="spec-item"><span class="spec-label">Teclado</span><span class="spec-value" id="spec-teclado">-</span></div>
-          <div class="spec-item"><span class="spec-label">Headset</span><span class="spec-value" id="spec-headset">-</span></div>
-        </div>
-      </div>
-    </div>
-
-    <!-- ==================== BADGE: CONTACT ==================== -->
+    <!-- SHARE -->
     <div class="badge">
-      <div class="badge-header">
-        <span class="badge-title">📬 Contact</span>
-      </div>
-      <div class="badge-content">
-        <div style="display: flex; gap: 10px; flex-wrap: wrap;">
-          <!-- 👇 EDITAR AQUI: Discord e Email -->
-          <button class="contact-btn" data-copy="seu.discord.aqui" id="copy-discord">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M20.3 4.6c-1.5-.7-3.1-1.2-4.8-1.5-.2.4-.5.9-.7 1.4-1.8-.3-3.6-.3-5.4 0-.2-.5-.5-1-.7-1.4-1.7.3-3.3.8-4.8 1.5C1.4 9.4.6 14 1 18.5c2 1.5 4 2.4 5.9 3 .5-.7 1-1.4 1.3-2.2-.7-.3-1.4-.6-2-1 .1-.1.2-.1.3-.2 3.1 1.4 6.4 1.4 9.5 0 .1.1.2.1.3.2-.6.4-1.3.7-2 1 .4.8.8 1.5 1.3 2.2 2-.6 3.9-1.5 5.9-3 .4-5.1-.7-9.6-2.9-13.9zM8.8 15.8c-1.2 0-2.1-1.1-2.1-2.4s.9-2.4 2.1-2.4 2.1 1.1 2.1 2.4c0 1.3-.9 2.4-2.1 2.4zm6.4 0c-1.2 0-2.1-1.1-2.1-2.4s.9-2.4 2.1-2.4 2.1 1.1 2.1 2.4c0 1.3-.9 2.4-2.1 2.4z"/></svg>
-            Copiar Discord
-          </button>
-          <button class="contact-btn" data-copy="seu.email@exemplo.com" id="copy-email">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
-            Copiar Email
-          </button>
-        </div>
-      </div>
-    </div>
-
-    <!-- ==================== BADGE: SHARE ==================== -->
-    <div class="badge">
-      <div class="badge-header">
-        <span class="badge-title">🔗 Share</span>
-      </div>
+      <div class="badge-header"><span class="badge-title">🔗 Share</span></div>
       <div class="badge-content">
         <button class="share-btn" id="share-btn">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
@@ -1309,7 +739,7 @@ body::after {
 
   </div> <!-- /main-card -->
 
-  <!-- ==================== FOOTER ==================== -->
+  <!-- FOOTER -->
   <div class="footer">
     <div class="footer-clock" id="footer-clock">00:00:00</div>
     <div class="footer-date" id="footer-date">---, -- de ---- de ----</div>
@@ -1319,26 +749,19 @@ body::after {
 </div> <!-- /container -->
 
 <!-- ============================================================
-     PLAYER DE ÁUDIO OCULTO
-     ============================================================ -->
-<!-- 👇 EDITAR AQUI: URL do seu arquivo .mp3 (coloque várias para variedade) -->
-<audio id="bg-music" loop preload="auto" style="display:none;">
-  <source src="" type="audio/mpeg">
-</audio>
-
-<!-- ============================================================
-     PAINEL ADMIN OCULTO — SÓ O DONO VÊ
-     ============================================================
-     👇 COMO ACESSAR:
-     1. Clique 7 VEZES no título "guns.lol" (o glitch)
-     2. Digite a senha: knssfplf
+     PAINEL ADMIN — SÓ O DONO VÊ (7 cliques no título + senha)
      ============================================================ -->
 <div class="admin-overlay" id="adminOverlay">
   <div class="admin-panel">
     <button class="close-btn" id="adminClose">✕</button>
-    <h2>🔐 PAINEL ADMIN — LOGS DE VISITANTES</h2>
+    <h2>🔐 PAINEL ADMIN — LOGS GLOBAIS</h2>
 
-    <!-- Stats rápidos -->
+    <!-- Status Firebase -->
+    <div class="admin-fb-status warn" id="fbStatus">
+      ⏳ Conectando ao banco de dados...
+    </div>
+
+    <!-- Stats -->
     <div class="admin-stats" id="adminStats">
       <div class="admin-stat-card">
         <div class="stat-value" id="statTotal">0</div>
@@ -1352,31 +775,36 @@ body::after {
         <div class="stat-value" id="statUnicos">0</div>
         <div class="stat-label">IPs únicos</div>
       </div>
+      <div class="admin-stat-card">
+        <div class="stat-value" id="statPaises">0</div>
+        <div class="stat-label">Países</div>
+      </div>
     </div>
 
-    <!-- Config do Discord Webhook -->
+    <!-- Config Webhook -->
     <div class="admin-config">
-      <label>🔗 Discord Webhook URL (opcional — envia logs automaticamente)</label>
+      <label>🤖 Discord Webhook (opcional — envia cada visita pro seu Discord)</label>
       <input type="url" id="webhookInput" placeholder="https://discord.com/api/webhooks/..." />
       <div style="display:flex; gap:8px; flex-wrap:wrap;">
         <button class="admin-btn" id="saveWebhook">Salvar Webhook</button>
-        <button class="admin-btn" id="testWebhook">Testar Webhook</button>
+        <button class="admin-btn" id="testWebhook">Testar</button>
         <button class="admin-btn danger" id="clearLogs">Limpar Logs</button>
         <button class="admin-btn" id="exportLogs">Exportar JSON</button>
+        <button class="admin-btn success" id="refreshLogs">🔄 Atualizar</button>
       </div>
       <div id="webhookStatus" style="margin-top:6px; font-size:0.75rem; color:var(--text-secondary);"></div>
     </div>
 
-    <!-- Lista de logs -->
+    <!-- Lista de Logs -->
     <div style="margin-top:12px;">
-      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
-        <span style="font-size:0.75rem; color:var(--text-secondary); text-transform:uppercase; letter-spacing:1px;">Últimos visitantes</span>
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px; flex-wrap:wrap; gap:4px;">
+        <span style="font-size:0.75rem; color:var(--text-secondary); text-transform:uppercase; letter-spacing:1px;">📍 Visitantes (todos os IPs)</span>
         <span id="logCount" style="font-size:0.7rem; color:var(--text-secondary);">0 registros</span>
       </div>
       <div id="adminLogs">
         <div style="text-align:center; padding:20px; color:var(--text-secondary); font-size:0.85rem;">
-          Nenhum visitante registrado ainda.
-          <br><small>Os logs aparecem aqui quando alguém acessa o site.</small>
+          Carregando logs do banco de dados centralizado...
+          <br><small>Se for a primeira vez, crie o Firebase (veja instruções no README)</small>
         </div>
       </div>
     </div>
@@ -1388,44 +816,38 @@ body::after {
      ============================================================ -->
 <script>
 // ============================================================
-// 👇 EDITAR AQUI: Suas informações (VARIÁVEIS PRINCIPAIS)
-// ============================================================
-// ============================================================
-// 👇 EDITAR AQUI: Suas informações (VARIÁVEIS PRINCIPAIS)
+// 👇 EDITAR AQUI: Suas informações
 // ============================================================
 const USERNAME = "knssfplf";
 const STEAM_ID = "76561199658376471";
-const SPOTIFY_URL = "https://open.spotify.com/user/312xqijgpfpdizrwdx3boragpmlm";
 const GITHUB = "knssfplf";
 const CURRENT_GAME = "Counter-Strike 2";
-
-// 👇 SENHA DO PAINEL ADMIN (troque se quiser)
-const ADMIN_PASSWORD = "knssfplf";
-
-// 👇 MÚSICAS LOFI (várias URLs para variedade — ~3min cada)
-// SoundHelix tem músicas instrumentais gratuitas. Troque pelas suas.
-const MUSIC_PLAYLIST = [
-  { url: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3",  title: "Lo-fi Study",     artist: "SoundHelix" },
-  { url: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-4.mp3",  title: "Chill Waves",     artist: "SoundHelix" },
-  { url: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-6.mp3",  title: "Late Night",      artist: "SoundHelix" },
-  { url: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-8.mp3",  title: "Rainy Day",       artist: "SoundHelix" },
-  { url: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-10.mp3", title: "Soft Beats",     artist: "SoundHelix" }
-];
-let currentTrackIndex = 0;
-const MUSIC_URL = MUSIC_PLAYLIST[0].url; // primeira música
-
-const PC_SPECS = {
-  cpu: "AMD Ryzen 7 5800X3D",
-  gpu: "NVIDIA RTX 4070 Ti",
-  ram: "32GB DDR4 3600MHz",
-  monitor: "LG 27GL850 1440p 144Hz",
-  mouse: "Logitech G Pro X Superlight",
-  teclado: "Keychron Q1",
-  headset: "HyperX Cloud II"
-};
+const ADMIN_PASSWORD = "Com16dacl593!"; // 👈 SENHA DO PAINEL ADMIN
 
 // ============================================================
-// LOADING SCREEN
+// 👇 FIREBASE — BANCO DE DADOS CENTRALIZADO (GRÁTIS)
+// ============================================================
+// Para TODOS os visitantes aparecerem no seu admin, você PRECISA
+// de um Firebase. Siga esses passos:
+//
+// 1. Vá em https://console.firebase.google.com
+// 2. Crie um projeto (nome: "gunslol" ou qualquer um)
+// 3. Desative o Google Analytics (não precisa)
+// 4. No menu esquerdo, vá em "Realtime Database"
+// 5. Clique em "Criar banco de dados"
+// 6. Escolha "Região: us-central1" e clique em "Próxima"
+// 7. Escolha "Modo de teste" (regras de segurança)
+// 8. Clique em "Ativar"
+// 9. Copie a URL do banco (ex: https://gunslol-default-rtdb.firebaseio.com)
+// 10. Cole no FIREBASE_DATABASE_URL abaixo
+//
+// ⚠️ SE NÃO CONFIGURAR O FIREBASE, os logs ficam APENAS no
+//    navegador de cada visitante (vc não vê os outros IPs).
+
+const FIREBASE_DATABASE_URL = ""; // 👈 COLE A URL AQUI (ex: "https://gunslol-default-rtdb.firebaseio.com")
+
+// ============================================================
+// LOADING
 // ============================================================
 window.addEventListener('load', () => {
   setTimeout(() => {
@@ -1434,13 +856,12 @@ window.addEventListener('load', () => {
 });
 
 // ============================================================
-// MATRIX RAIN (MUITO SUTIL) — Canvas
+// MATRIX RAIN
 // ============================================================
 (function() {
   const canvas = document.getElementById('matrix-canvas');
   const ctx = canvas.getContext('2d');
   let w, h, cols, drops;
-
   function resize() {
     w = canvas.width = window.innerWidth;
     h = canvas.height = window.innerHeight;
@@ -1449,28 +870,21 @@ window.addEventListener('load', () => {
   }
   resize();
   window.addEventListener('resize', resize);
-
   const chars = 'アイウエオカキクケコサシスセソタチツテトナニヌネノハヒフヘホマミムメモヤユヨラリルレロワヲン0123456789';
-
   function draw() {
     ctx.fillStyle = 'rgba(10, 10, 10, 0.05)';
     ctx.fillRect(0, 0, w, h);
     ctx.fillStyle = '#8b5cf6';
     ctx.font = '14px monospace';
-
     for (let i = 0; i < drops.length; i++) {
       const text = chars[Math.floor(Math.random() * chars.length)];
       ctx.fillText(text, i * 20, drops[i] * 20);
-      if (drops[i] * 20 > h && Math.random() > 0.975) {
-        drops[i] = 0;
-      }
+      if (drops[i] * 20 > h && Math.random() > 0.975) { drops[i] = 0; }
       drops[i]++;
     }
     requestAnimationFrame(draw);
   }
   draw();
-
-  // Toggle neve (na verdade controla visibilidade da matrix)
   let matrixVisible = true;
   document.getElementById('snow-toggle').addEventListener('click', function() {
     matrixVisible = !matrixVisible;
@@ -1481,7 +895,7 @@ window.addEventListener('load', () => {
 })();
 
 // ============================================================
-// PARTÍCULAS FLUTUANTES
+// PARTÍCULAS
 // ============================================================
 (function() {
   const canvas = document.getElementById('particles-canvas');
@@ -1489,25 +903,12 @@ window.addEventListener('load', () => {
   let w, h;
   const particles = [];
   const PARTICLE_COUNT = 60;
-
-  function resize() {
-    w = canvas.width = window.innerWidth;
-    h = canvas.height = window.innerHeight;
-  }
+  function resize() { w = canvas.width = window.innerWidth; h = canvas.height = window.innerHeight; }
   resize();
   window.addEventListener('resize', resize);
-
   for (let i = 0; i < PARTICLE_COUNT; i++) {
-    particles.push({
-      x: Math.random() * w,
-      y: Math.random() * h,
-      vx: (Math.random() - 0.5) * 0.3,
-      vy: (Math.random() - 0.5) * 0.3 - 0.1,
-      r: Math.random() * 2 + 1,
-      alpha: Math.random() * 0.3 + 0.05
-    });
+    particles.push({ x: Math.random() * w, y: Math.random() * h, vx: (Math.random() - 0.5) * 0.3, vy: (Math.random() - 0.5) * 0.3 - 0.1, r: Math.random() * 2 + 1, alpha: Math.random() * 0.3 + 0.05 });
   }
-
   function drawParticles() {
     ctx.clearRect(0, 0, w, h);
     for (const p of particles) {
@@ -1515,12 +916,8 @@ window.addEventListener('load', () => {
       ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
       ctx.fillStyle = `rgba(139, 92, 246, ${p.alpha})`;
       ctx.fill();
-      p.x += p.vx;
-      p.y += p.vy;
-      if (p.x < 0) p.x = w;
-      if (p.x > w) p.x = 0;
-      if (p.y < 0) p.y = h;
-      if (p.y > h) p.y = 0;
+      p.x += p.vx; p.y += p.vy;
+      if (p.x < 0) p.x = w; if (p.x > w) p.x = 0; if (p.y < 0) p.y = h; if (p.y > h) p.y = 0;
     }
     requestAnimationFrame(drawParticles);
   }
@@ -1528,7 +925,7 @@ window.addEventListener('load', () => {
 })();
 
 // ============================================================
-// SELETOR DE TEMA
+// TEMA
 // ============================================================
 document.querySelectorAll('.theme-dot').forEach(dot => {
   dot.addEventListener('click', function() {
@@ -1539,34 +936,23 @@ document.querySelectorAll('.theme-dot').forEach(dot => {
 });
 
 // ============================================================
-// TYPING EFFECT NO STATUS
+// TYPING EFFECT
 // ============================================================
 (function() {
   const el = document.getElementById('typing-status');
   const texts = ['online', 'disponível', 'jogando', 'no ar'];
-  let idx = 0;
-  let charIdx = 0;
-  let isDeleting = false;
-
+  let idx = 0, charIdx = 0, isDeleting = false;
   function type() {
     const current = texts[idx];
     if (!isDeleting) {
       el.textContent = current.substring(0, charIdx + 1);
       charIdx++;
-      if (charIdx === current.length) {
-        setTimeout(() => { isDeleting = true; type(); }, 3000);
-        return;
-      }
+      if (charIdx === current.length) { setTimeout(() => { isDeleting = true; type(); }, 3000); return; }
       setTimeout(type, 80);
     } else {
       el.textContent = current.substring(0, charIdx - 1);
       charIdx--;
-      if (charIdx === 0) {
-        isDeleting = false;
-        idx = (idx + 1) % texts.length;
-        setTimeout(type, 400);
-        return;
-      }
+      if (charIdx === 0) { isDeleting = false; idx = (idx + 1) % texts.length; setTimeout(type, 400); return; }
       setTimeout(type, 40);
     }
   }
@@ -1574,95 +960,7 @@ document.querySelectorAll('.theme-dot').forEach(dot => {
 })();
 
 // ============================================================
-// ATUALIZAR INFOS (CURRENT GAME, COMMISSIONS, SPECS)
-// ============================================================
-document.getElementById('game-name').textContent = CURRENT_GAME;
-
-// Preencher PC Specs
-document.getElementById('spec-cpu').textContent = PC_SPECS.cpu;
-document.getElementById('spec-gpu').textContent = PC_SPECS.gpu;
-document.getElementById('spec-ram').textContent = PC_SPECS.ram;
-document.getElementById('spec-monitor').textContent = PC_SPECS.monitor;
-document.getElementById('spec-mouse').textContent = PC_SPECS.mouse;
-document.getElementById('spec-teclado').textContent = PC_SPECS.teclado;
-document.getElementById('spec-headset').textContent = PC_SPECS.headset;
-
-// ============================================================
-// PC SPECS — COLLAPSIBLE (ACORDION)
-// ============================================================
-const specsToggle = document.getElementById('specs-toggle');
-const specsContent = document.getElementById('specs-content');
-specsToggle.addEventListener('click', function() {
-  this.classList.toggle('active');
-  specsContent.classList.toggle('open');
-});
-
-// ============================================================
-// PLAYER DE MÚSICA
-// ============================================================
-const audio = document.getElementById('bg-music');
-const musicToggle = document.getElementById('music-toggle');
-const musicIcon = document.getElementById('music-icon');
-const waveBars = document.querySelectorAll('.wave-bar');
-let isPlaying = false;
-
-// Configurar URL da música
-audio.src = MUSIC_URL;
-audio.volume = 0.2; // 20% por padrão
-
-// Atualizar info da música atual
-function updateTrackInfo() {
-  const track = MUSIC_PLAYLIST[currentTrackIndex];
-  document.getElementById('music-title').textContent = track.title;
-  document.getElementById('music-artist').textContent = track.artist;
-}
-updateTrackInfo();
-
-// Tocar próxima música quando atual terminar
-audio.addEventListener('ended', function() {
-  currentTrackIndex = (currentTrackIndex + 1) % MUSIC_PLAYLIST.length;
-  const next = MUSIC_PLAYLIST[currentTrackIndex];
-  audio.src = next.url;
-  updateTrackInfo();
-  if (isPlaying) {
-    audio.play().catch(() => {});
-  }
-});
-
-musicToggle.addEventListener('click', function() {
-  if (isPlaying) {
-    audio.pause();
-    musicIcon.textContent = '▶';
-    waveBars.forEach(bar => bar.classList.add('paused'));
-  } else {
-    audio.play().catch(() => {
-      // Autoplay bloqueado — aviso silencioso
-    });
-    musicIcon.textContent = '⏸';
-    waveBars.forEach(bar => bar.classList.remove('paused'));
-  }
-  isPlaying = !isPlaying;
-});
-
-// Quando a música termina ou é pausada pelo sistema
-audio.addEventListener('pause', () => {
-  if (isPlaying) {
-    isPlaying = false;
-    musicIcon.textContent = '▶';
-    waveBars.forEach(bar => bar.classList.add('paused'));
-  }
-});
-
-audio.addEventListener('play', () => {
-  if (!isPlaying) {
-    isPlaying = true;
-    musicIcon.textContent = '⏸';
-    waveBars.forEach(bar => bar.classList.remove('paused'));
-  }
-});
-
-// ============================================================
-// COPIAR PARA CLIPBOARD (CONTACT)
+// SHARE
 // ============================================================
 function showToast(msg) {
   const toast = document.getElementById('toast');
@@ -1671,157 +969,171 @@ function showToast(msg) {
   setTimeout(() => toast.classList.remove('show'), 2500);
 }
 
-document.getElementById('copy-discord').addEventListener('click', function() {
-  const text = this.dataset.copy;
-  navigator.clipboard.writeText(text).then(() => {
-    this.classList.add('copied');
-    this.innerHTML = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg> Copiado!';
-    showToast('✅ Discord copiado!');
-    setTimeout(() => {
-      this.classList.remove('copied');
-      this.innerHTML = '<svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M20.3 4.6c-1.5-.7-3.1-1.2-4.8-1.5-.2.4-.5.9-.7 1.4-1.8-.3-3.6-.3-5.4 0-.2-.5-.5-1-.7-1.4-1.7.3-3.3.8-4.8 1.5C1.4 9.4.6 14 1 18.5c2 1.5 4 2.4 5.9 3 .5-.7 1-1.4 1.3-2.2-.7-.3-1.4-.6-2-1 .1-.1.2-.1.3-.2 3.1 1.4 6.4 1.4 9.5 0 .1.1.2.1.3.2-.6.4-1.3.7-2 1 .4.8.8 1.5 1.3 2.2 2-.6 3.9-1.5 5.9-3 .4-5.1-.7-9.6-2.9-13.9zM8.8 15.8c-1.2 0-2.1-1.1-2.1-2.4s.9-2.4 2.1-2.4 2.1 1.1 2.1 2.4c0 1.3-.9 2.4-2.1 2.4zm6.4 0c-1.2 0-2.1-1.1-2.1-2.4s.9-2.4 2.1-2.4 2.1 1.1 2.1 2.4c0 1.3-.9 2.4-2.1 2.4z"/></svg> Copiar Discord';
-    }, 2000);
-  }).catch(() => {
-    // Fallback para HTTP
-    const ta = document.createElement('textarea');
-    ta.value = text;
-    document.body.appendChild(ta);
-    ta.select();
-    document.execCommand('copy');
-    ta.remove();
-    showToast('✅ Discord copiado!');
-  });
-});
-
-document.getElementById('copy-email').addEventListener('click', function() {
-  const text = this.dataset.copy;
-  navigator.clipboard.writeText(text).then(() => {
-    this.classList.add('copied');
-    this.innerHTML = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg> Copiado!';
-    showToast('✅ Email copiado!');
-    setTimeout(() => {
-      this.classList.remove('copied');
-      this.innerHTML = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg> Copiar Email';
-    }, 2000);
-  }).catch(() => {
-    const ta = document.createElement('textarea');
-    ta.value = text;
-    document.body.appendChild(ta);
-    ta.select();
-    document.execCommand('copy');
-    ta.remove();
-    showToast('✅ Email copiado!');
-  });
-});
-
-// ============================================================
-// SHARE — Web Share API
-// ============================================================
 document.getElementById('share-btn').addEventListener('click', function() {
-  const shareData = {
-    title: `${USERNAME} | guns.lol`,
-    text: `check out my bio link — ${USERNAME}`,
-    url: window.location.href
-  };
-
-  if (navigator.share) {
-    navigator.share(shareData).catch(() => {});
-  } else {
-    // Fallback: copiar link
-    navigator.clipboard.writeText(window.location.href).then(() => {
-      showToast('🔗 Link copiado para a área de transferência!');
-    }).catch(() => {
+  const shareData = { title: `${USERNAME} | guns.lol`, text: `check out my bio link — ${USERNAME}`, url: window.location.href };
+  if (navigator.share) { navigator.share(shareData).catch(() => {}); }
+  else {
+    navigator.clipboard.writeText(window.location.href).then(() => showToast('🔗 Link copiado!'))
+    .catch(() => {
       const ta = document.createElement('textarea');
       ta.value = window.location.href;
       document.body.appendChild(ta);
       ta.select();
       document.execCommand('copy');
       ta.remove();
-      showToast('🔗 Link copiado para a área de transferência!');
+      showToast('🔗 Link copiado!');
     });
   }
 });
 
 // ============================================================
-// RELÓGIO EM TEMPO REAL
+// RELÓGIO
 // ============================================================
 function updateClock() {
   const now = new Date();
-  const hours = String(now.getHours()).padStart(2, '0');
-  const mins = String(now.getMinutes()).padStart(2, '0');
-  const secs = String(now.getSeconds()).padStart(2, '0');
-  document.getElementById('footer-clock').textContent = `${hours}:${mins}:${secs}`;
-
-  const dias = ['Domingo', 'Segunda-feira', 'Terça-feira', 'Quarta-feira', 'Quinta-feira', 'Sexta-feira', 'Sábado'];
-  const meses = ['janeiro', 'fevereiro', 'março', 'abril', 'maio', 'junho', 'julho', 'agosto', 'setembro', 'outubro', 'novembro', 'dezembro'];
+  document.getElementById('footer-clock').textContent = `${String(now.getHours()).padStart(2,'0')}:${String(now.getMinutes()).padStart(2,'0')}:${String(now.getSeconds()).padStart(2,'0')}`;
+  const dias = ['Domingo','Segunda-feira','Terça-feira','Quarta-feira','Quinta-feira','Sexta-feira','Sábado'];
+  const meses = ['janeiro','fevereiro','março','abril','maio','junho','julho','agosto','setembro','outubro','novembro','dezembro'];
   document.getElementById('footer-date').textContent = `${dias[now.getDay()]}, ${now.getDate()} de ${meses[now.getMonth()]} de ${now.getFullYear()}`;
 }
-
 updateClock();
 setInterval(updateClock, 1000);
 
 // ============================================================
-// CONTADOR DE VISITAS (countapi.xyz — GRATUITO)
+// CONTADOR DE VISITAS
 // ============================================================
 (function() {
-  const visitEl = document.getElementById('visit-count');
-  // 👇 EDITAR AQUI: Se quiser seu próprio namespace/key no countapi
-  const API_URL = 'https://api.countapi.xyz/hit/guns.lol-knssfplf/visits';
-
-  fetch(API_URL)
+  fetch('https://api.countapi.xyz/hit/guns.lol-knssfplf/visits')
     .then(res => res.json())
-    .then(data => {
-      visitEl.textContent = data.value;
-    })
-    .catch(() => {
-      visitEl.textContent = '--';
-    });
+    .then(data => { document.getElementById('visit-count').textContent = data.value; })
+    .catch(() => { document.getElementById('visit-count').textContent = '--'; });
 })();
 
 // ============================================================
-// SISTEMA DE LOGGER + PAINEL ADMIN
+// YOUTUBE PLAYER (MÚSICA LOFI)
+// ============================================================
+let ytPlayer = null;
+let ytReady = false;
+let ytPlaying = false;
+
+// Carregar YouTube IFrame API
+const ytScript = document.createElement('script');
+ytScript.src = 'https://www.youtube.com/iframe_api';
+document.body.appendChild(ytScript);
+
+// YouTube API chama isso quando carrega
+window.onYouTubeIframeAPIReady = function() {
+  ytPlayer = new YT.Player('yt-player', {
+    height: '0',
+    width: '0',
+    videoId: 'CFGLoQIhmow',
+    playerVars: {
+      autoplay: 0,
+      loop: 1,
+      playlist: 'CFGLoQIhmow',
+      controls: 0,
+      disablekb: 1,
+      modestbranding: 1
+    },
+    events: {
+      onReady: function() { ytReady = true; },
+      onStateChange: function(e) {
+        // Se o vídeo terminou, ele reinicia automaticamente (loop)
+        if (e.data === YT.PlayerState.ENDED) {
+          // O parâmetro loop já cuida disso
+        }
+        if (e.data === YT.PlayerState.PLAYING) { ytPlaying = true; }
+        if (e.data === YT.PlayerState.PAUSED) { ytPlaying = false; }
+      }
+    }
+  });
+};
+
+// Botão play/pause
+const musicToggle = document.getElementById('music-toggle');
+const musicIcon = document.getElementById('music-icon');
+const waveBars = document.querySelectorAll('.wave-bar');
+
+musicToggle.addEventListener('click', function() {
+  if (!ytPlayer || !ytReady) {
+    showToast('⏳ Player carregando...');
+    return;
+  }
+  if (ytPlaying) {
+    ytPlayer.pauseVideo();
+    musicIcon.textContent = '▶';
+    waveBars.forEach(bar => bar.classList.add('paused'));
+    ytPlaying = false;
+  } else {
+    ytPlayer.playVideo();
+    musicIcon.textContent = '⏸';
+    waveBars.forEach(bar => bar.classList.remove('paused'));
+    ytPlaying = true;
+  }
+});
+
+// ============================================================
+// SISTEMA DE LOGGER GLOBAL (FIREBASE + WEBHOOK + LOCAL)
 // ============================================================
 
-// ---- VARIÁVEIS DO ADMIN ----
-const ADMIN_STORAGE_KEY = 'gunslol_logs_knssfplf';
-const WEBHOOK_STORAGE_KEY = 'gunslol_webhook_knssfplf';
+const LOCAL_STORAGE_KEY = 'gunslol_global_logs';
+const WEBHOOK_STORAGE_KEY = 'gunslol_webhook_url';
 let adminClickCount = 0;
 let adminClickTimer = null;
 
-// ---- CARREGAR LOGS SALVOS ----
-function loadLogs() {
-  try {
-    const data = localStorage.getItem(ADMIN_STORAGE_KEY);
-    return data ? JSON.parse(data) : [];
-  } catch { return []; }
+// ---- Firebase Helper Functions ----
+function firebaseUrl(path) {
+  if (!FIREBASE_DATABASE_URL) return null;
+  return `${FIREBASE_DATABASE_URL}/${path}.json`;
 }
 
-function saveLogs(logs) {
+// Escrever log no Firebase (append)
+async function firebasePushLog(logData) {
+  if (!firebaseUrl('logs')) return false;
   try {
-    localStorage.setItem(ADMIN_STORAGE_KEY, JSON.stringify(logs));
-  } catch {}
+    const res = await fetch(firebaseUrl('logs'), {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(logData)
+    });
+    return res.ok;
+  } catch { return false; }
 }
 
-// ---- CAPTURAR DADOS DO VISITANTE ----
+// Ler todos os logs do Firebase
+async function firebaseFetchLogs() {
+  if (!firebaseUrl('logs')) return null;
+  try {
+    const res = await fetch(firebaseUrl('logs') + '?orderBy="$key"&limitToLast=200');
+    if (!res.ok) return null;
+    const data = await res.json();
+    if (!data) return [];
+    // Firebase retorna um objeto com chaves geradas
+    const logs = Object.values(data);
+    // Ordenar por timestamp (mais recente primeiro)
+    logs.sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
+    return logs;
+  } catch { return null; }
+}
+
+// ---- Capturar dados do visitante ----
 async function captureVisitorData() {
   const data = {
     timestamp: new Date().toISOString(),
     timestamp_br: new Date().toLocaleString('pt-BR', { timeZone: 'America/Sao_Paulo' }),
     ip: 'desconhecido',
     location: { city: '?', region: '?', country: '?', isp: '?' },
-    userAgent: navigator.userAgent,
+    userAgent: navigator.userAgent.substring(0, 300),
     referrer: document.referrer || 'direto',
     page: window.location.href,
     screen: `${screen.width}x${screen.height}`,
     language: navigator.language
   };
 
-  // Tenta pegar IP e localização
   try {
     const ipRes = await fetch('https://api.ipify.org?format=json');
     const ipData = await ipRes.json();
     data.ip = ipData.ip;
-
     try {
       const locRes = await fetch(`https://ip-api.com/json/${data.ip}?fields=city,region,country,isp,org`);
       const locData = await locRes.json();
@@ -1835,122 +1147,136 @@ async function captureVisitorData() {
   return data;
 }
 
-// ---- ENVIAR PARA DISCORD WEBHOOK ----
+// ---- Enviar para Discord ----
 async function sendToDiscord(visitorData) {
   const webhookUrl = localStorage.getItem(WEBHOOK_STORAGE_KEY);
   if (!webhookUrl) return false;
 
-  // Formatar data e hora BR
-  const dataHora = new Date(visitorData.timestamp);
-  const dataStr = dataHora.toLocaleDateString('pt-BR');
-  const horaStr = dataHora.toLocaleTimeString('pt-BR');
-
-  const embed = {
-    title: `🎯 Novo visitante — ${USERNAME}`,
-    color: 0x8b5cf6,
-    fields: [
-      { name: '👤 IP', value: `\`${visitorData.ip}\``, inline: true },
-      { name: '📍 Localização', value: `${visitorData.location.city}, ${visitorData.location.region} — ${visitorData.location.country}`, inline: true },
-      { name: '🏢 ISP', value: visitorData.location.isp, inline: true },
-      { name: '📅 Data', value: dataStr, inline: true },
-      { name: '⏰ Hora', value: horaStr, inline: true },
-      { name: '🖥️ Tela', value: visitorData.screen, inline: true },
-      { name: '🌐 Idioma', value: visitorData.language, inline: true },
-      { name: '🔗 Página', value: visitorData.page, inline: false },
-      { name: '📎 Referência', value: visitorData.referrer || 'direto', inline: false },
-      { name: '📱 User-Agent', value: `\`\`\`${visitorData.userAgent.substring(0, 200)}\`\`\``, inline: false }
-    ],
-    footer: { text: `guns.lol — ${USERNAME}` },
-    timestamp: visitorData.timestamp
-  };
+  const d = new Date(visitorData.timestamp);
+  const fields = [
+    { name: '👤 IP', value: `\`${visitorData.ip}\``, inline: true },
+    { name: '📍 Local', value: `${visitorData.location.city}, ${visitorData.location.region} — ${visitorData.location.country}`, inline: true },
+    { name: '🏢 ISP', value: visitorData.location.isp || '?', inline: true },
+    { name: '📅 Data', value: d.toLocaleDateString('pt-BR'), inline: true },
+    { name: '⏰ Hora', value: d.toLocaleTimeString('pt-BR'), inline: true },
+    { name: '🖥️ ${visitorData.screen}', value: visitorData.language, inline: true },
+    { name: '📎 Referência', value: visitorData.referrer || 'direto', inline: false },
+    { name: '📱 UA', value: `\`\`\`${visitorData.userAgent.substring(0, 200)}\`\`\``, inline: false }
+  ];
 
   try {
     const res = await fetch(webhookUrl, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ embeds: [embed] })
+      body: JSON.stringify({
+        embeds: [{
+          title: `🎯 Novo visitante — ${USERNAME}`,
+          color: 0x8b5cf6,
+          fields: fields,
+          footer: { text: `guns.lol — ${USERNAME}` },
+          timestamp: visitorData.timestamp
+        }]
+      })
     });
     return res.ok;
-  } catch {
-    return false;
-  }
+  } catch { return false; }
 }
 
-// ---- REGISTRAR VISITA ----
+// ---- Registrar visita (Firebase + LocalStorage + Discord) ----
 async function registerVisit() {
   const visitorData = await captureVisitorData();
-  const logs = loadLogs();
 
-  // Adicionar ao início do array (mais recente primeiro)
-  logs.unshift(visitorData);
-
-  // Manter só os últimos 200 logs
-  if (logs.length > 200) logs.length = 200;
-
-  saveLogs(logs);
-
-  // Tentar enviar para Discord (se configurado)
-  const sent = await sendToDiscord(visitorData);
-
-  // Se o admin panel estiver aberto, atualizar
-  const overlay = document.getElementById('adminOverlay');
-  if (overlay && overlay.classList.contains('open')) {
-    renderAdminLogs();
+  // 1. Salvar no Firebase (GLOBAL — todos veem)
+  let fbOk = false;
+  if (FIREBASE_DATABASE_URL) {
+    fbOk = await firebasePushLog(visitorData);
   }
 
-  console.log(`[LOGGER] Visita registrada: ${visitorData.ip} (${visitorData.location.city})` + (sent ? ' ✅ Discord' : ''));
+  // 2. Salvar no LocalStorage (fallback local)
+  try {
+    const logs = JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY) || '[]');
+    logs.unshift(visitorData);
+    if (logs.length > 200) logs.length = 200;
+    localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(logs));
+  } catch {}
+
+  // 3. Enviar para Discord (se configurado)
+  const discordOk = await sendToDiscord(visitorData);
+
+  console.log(`[LOGGER] Visita: ${visitorData.ip} | ${visitorData.location.city} | Firebase: ${fbOk ? '✅' : '⛔'} | Discord: ${discordOk ? '✅' : '⛔'}`);
+
+  // Atualizar admin se estiver aberto
+  if (document.getElementById('adminOverlay').classList.contains('open')) {
+    renderAdminLogs();
+  }
 }
 
-// ---- RENDERIZAR LOGS NO PAINEL ADMIN ----
-function renderAdminLogs() {
-  const logs = loadLogs();
+// ---- Renderizar admin logs (Firebase + LocalStorage) ----
+async function renderAdminLogs() {
   const container = document.getElementById('adminLogs');
-  const logCount = document.getElementById('logCount');
+  const fbStatus = document.getElementById('fbStatus');
+
+  let logs = [];
+
+  // Tenta buscar do Firebase primeiro
+  if (FIREBASE_DATABASE_URL) {
+    const fbLogs = await firebaseFetchLogs();
+    if (fbLogs && fbLogs.length > 0) {
+      logs = fbLogs;
+      fbStatus.className = 'admin-fb-status ok';
+      fbStatus.innerHTML = '✅ <b>Firebase conectado!</b> Logs centralizados de TODOS os visitantes.';
+    } else if (fbLogs !== null && fbLogs.length === 0) {
+      fbStatus.className = 'admin-fb-status ok';
+      fbStatus.innerHTML = '✅ <b>Firebase conectado!</b> Nenhum visitante ainda (seja o primeiro!).';
+    } else {
+      fbStatus.className = 'admin-fb-status err';
+      fbStatus.innerHTML = '❌ <b>Firebase offline.</b> Verifique a URL do banco. Usando logs locais.';
+      // Fallback para localStorage
+      try { logs = JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY) || '[]'); } catch { logs = []; }
+    }
+  } else {
+    fbStatus.className = 'admin-fb-status err';
+    fbStatus.innerHTML = '⚠️ <b>Firebase NÃO configurado!</b> Você só vê seus próprios logs. <a href="#firebase-setup" style="color:var(--neon-color);">Configure o Firebase</a> para ver TODOS os visitantes.';
+    try { logs = JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY) || '[]'); } catch { logs = []; }
+  }
 
   // Atualizar stats
   document.getElementById('statTotal').textContent = logs.length;
-
-  // Visitas hoje
   const hoje = new Date().toLocaleDateString('pt-BR');
-  const visitasHoje = logs.filter(l => {
-    const d = new Date(l.timestamp);
-    return d.toLocaleDateString('pt-BR') === hoje;
-  }).length;
-  document.getElementById('statHoje').textContent = visitasHoje;
-
-  // IPs únicos
-  const ipsUnicos = new Set(logs.map(l => l.ip));
-  document.getElementById('statUnicos').textContent = ipsUnicos.size;
-
-  logCount.textContent = `${logs.length} registros`;
+  document.getElementById('statHoje').textContent = logs.filter(l => new Date(l.timestamp).toLocaleDateString('pt-BR') === hoje).length;
+  document.getElementById('statUnicos').textContent = new Set(logs.map(l => l.ip)).size;
+  document.getElementById('statPaises').textContent = new Set(logs.map(l => l.location.country).filter(c => c !== '?')).size;
+  document.getElementById('logCount').textContent = `${logs.length} registros`;
 
   if (logs.length === 0) {
     container.innerHTML = `<div style="text-align:center; padding:20px; color:var(--text-secondary); font-size:0.85rem;">
       Nenhum visitante registrado ainda.
-      <br><small>Os logs aparecem aqui quando alguém acessa o site.</small>
+      <br><small>Compartilhe o link e os IPs aparecerão aqui!</small>
     </div>`;
     return;
   }
 
   let html = '';
-  const maxShow = 50;
+  const maxShow = 100;
   const toShow = logs.slice(0, maxShow);
 
   for (const log of toShow) {
     const d = new Date(log.timestamp);
     const data = d.toLocaleDateString('pt-BR');
     const hora = d.toLocaleTimeString('pt-BR');
+    const flag = log.location.country && log.location.country !== '?' ? getFlag(log.location.country) : '🌐';
 
     html += `<div class="admin-log-entry">
-      <div style="display:flex; justify-content:space-between; align-items:center;">
-        <span class="log-ip">🌐 ${log.ip}</span>
+      <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:4px;">
+        <span class="log-ip">${flag} ${log.ip}</span>
         <span class="log-time">${data} ${hora}</span>
       </div>
       <div class="log-location">📍 ${log.location.city}, ${log.location.region} — ${log.location.country}</div>
-      <div style="display:flex; justify-content:space-between; margin-top:4px;">
+      <div style="display:flex; justify-content:space-between; flex-wrap:wrap; gap:4px; margin-top:4px;">
         <span class="log-device">🖥️ ${log.screen} | ${log.language}</span>
-        <span class="log-ref">📎 ${log.referrer.substring(0, 40)}</span>
+        <span class="log-isp">📡 ${log.location.isp}</span>
       </div>
+      ${log.referrer && log.referrer !== 'direto' ? `<div class="log-ref">📎 ${log.referrer.substring(0, 60)}</div>` : ''}
     </div>`;
   }
 
@@ -1963,13 +1289,38 @@ function renderAdminLogs() {
   container.innerHTML = html;
 }
 
-// ---- ABRIR PAINEL ADMIN ----
+// ---- Pegar bandeira do país (emoji) ----
+function getFlag(country) {
+  // Tenta匹配 alguns países comuns
+  const map = {
+    'Brazil': '🇧🇷', 'Brasil': '🇧🇷',
+    'United States': '🇺🇸', 'EUA': '🇺🇸', 'US': '🇺🇸',
+    'Portugal': '🇵🇹',
+    'United Kingdom': '🇬🇧', 'UK': '🇬🇧',
+    'Germany': '🇩🇪', 'Alemanha': '🇩🇪',
+    'France': '🇫🇷', 'França': '🇫🇷',
+    'Japan': '🇯🇵', 'Japão': '🇯🇵',
+    'Canada': '🇨🇦',
+    'Australia': '🇦🇺',
+    'Argentina': '🇦🇷',
+    'Spain': '🇪🇸', 'Espanha': '🇪🇸',
+    'Italy': '🇮🇹', 'Itália': '🇮🇹',
+    'Russia': '🇷🇺', 'Rússia': '🇷🇺',
+    'China': '🇨🇳',
+    'South Korea': '🇰🇷', 'Coreia': '🇰🇷',
+    'Mexico': '🇲🇽', 'México': '🇲🇽',
+    'Netherlands': '🇳🇱', 'Holanda': '🇳🇱',
+    'Sweden': '🇸🇪', 'Suécia': '🇸🇪'
+  };
+  return map[country] || '🌐';
+}
+
+// ---- Abrir admin ----
 function openAdminPanel() {
   const overlay = document.getElementById('adminOverlay');
   overlay.classList.add('open');
   renderAdminLogs();
 
-  // Carregar webhook salvo
   const savedWebhook = localStorage.getItem(WEBHOOK_STORAGE_KEY);
   if (savedWebhook) {
     document.getElementById('webhookInput').value = savedWebhook;
@@ -1982,12 +1333,11 @@ function closeAdminPanel() {
   document.getElementById('adminOverlay').classList.remove('open');
 }
 
-// ---- ATALHO SECRETO: CLIQUE NO TÍTULO 7 VEZES ----
+// ---- 7 cliques no título ----
 document.querySelector('.glitch-title').addEventListener('click', function() {
   adminClickCount++;
   clearTimeout(adminClickTimer);
   adminClickTimer = setTimeout(() => { adminClickCount = 0; }, 1500);
-
   if (adminClickCount >= 7) {
     adminClickCount = 0;
     const senha = prompt('🔐 Digite a senha do painel admin:');
@@ -1999,12 +1349,9 @@ document.querySelector('.glitch-title').addEventListener('click', function() {
   }
 });
 
-// ---- EVENTOS DO PAINEL ADMIN ----
+// ---- Eventos do admin ----
 document.addEventListener('DOMContentLoaded', function() {
-  // Fechar admin
   document.getElementById('adminClose').addEventListener('click', closeAdminPanel);
-
-  // Clicar fora para fechar
   document.getElementById('adminOverlay').addEventListener('click', function(e) {
     if (e.target === this) closeAdminPanel();
   });
@@ -2019,88 +1366,65 @@ document.addEventListener('DOMContentLoaded', function() {
       return;
     }
     if (!url.startsWith('https://discord.com/api/webhooks/')) {
-      document.getElementById('webhookStatus').textContent = '❌ URL inválida! Deve começar com https://discord.com/api/webhooks/';
+      document.getElementById('webhookStatus').textContent = '❌ URL inválida';
       document.getElementById('webhookStatus').style.color = '#ff4444';
       return;
     }
     localStorage.setItem(WEBHOOK_STORAGE_KEY, url);
-    document.getElementById('webhookStatus').textContent = '✅ Webhook salvo com sucesso!';
+    document.getElementById('webhookStatus').textContent = '✅ Webhook salvo!';
     document.getElementById('webhookStatus').style.color = 'var(--green)';
   });
 
   // Testar webhook
   document.getElementById('testWebhook').addEventListener('click', async function() {
     const url = document.getElementById('webhookInput').value.trim();
-    if (!url) {
-      document.getElementById('webhookStatus').textContent = '❌ Configure uma URL primeiro';
-      document.getElementById('webhookStatus').style.color = '#ff4444';
-      return;
-    }
-    this.textContent = 'Enviando...';
-    this.disabled = true;
+    if (!url) { document.getElementById('webhookStatus').textContent = '❌ Configure uma URL primeiro'; return; }
+    this.textContent = 'Enviando...'; this.disabled = true;
     try {
       const res = await fetch(url, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          content: `🟢 **Teste de webhook** — ${USERNAME}\nSe você está vendo isso, o logger está funcionando!`
-        })
+        method: 'POST', headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ content: `🟢 **Teste de webhook** — ${USERNAME}\nLogger funcionando!` })
       });
-      if (res.ok) {
-        document.getElementById('webhookStatus').textContent = '✅ Teste enviado com sucesso! Verifique o Discord.';
-        document.getElementById('webhookStatus').style.color = 'var(--green)';
-      } else {
-        document.getElementById('webhookStatus').textContent = `❌ Erro ${res.status}: ${res.statusText}`;
-        document.getElementById('webhookStatus').style.color = '#ff4444';
-      }
-    } catch {
-      document.getElementById('webhookStatus').textContent = '❌ Erro de conexão';
-      document.getElementById('webhookStatus').style.color = '#ff4444';
-    }
-    this.textContent = 'Testar Webhook';
-    this.disabled = false;
+      document.getElementById('webhookStatus').textContent = res.ok ? '✅ Teste enviado! Verifique o Discord.' : `❌ Erro ${res.status}`;
+    } catch { document.getElementById('webhookStatus').textContent = '❌ Erro de conexão'; }
+    this.textContent = 'Testar'; this.disabled = false;
   });
 
-  // Limpar logs
+  // Limpar logs (só localStorage)
   document.getElementById('clearLogs').addEventListener('click', function() {
-    if (confirm('Tem certeza? Isso vai apagar TODOS os logs de visitantes.')) {
-      saveLogs([]);
+    if (confirm('Tem certeza? Os logs do Firebase NÃO serão afetados (só os locais).')) {
+      localStorage.removeItem(LOCAL_STORAGE_KEY);
       renderAdminLogs();
-      document.getElementById('webhookStatus').textContent = '🗑️ Logs limpos!';
-      document.getElementById('webhookStatus').style.color = 'var(--text-secondary)';
     }
   });
 
-  // Exportar JSON
+  // Exportar
   document.getElementById('exportLogs').addEventListener('click', function() {
-    const logs = loadLogs();
-    if (logs.length === 0) {
-      document.getElementById('webhookStatus').textContent = '⚠️ Nenhum log para exportar';
-      document.getElementById('webhookStatus').style.color = 'var(--pink)';
-      return;
-    }
-    const json = JSON.stringify(logs, null, 2);
-    const blob = new Blob([json], { type: 'application/json' });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = `gunslol_logs_${new Date().toISOString().slice(0,10)}.json`;
-    a.click();
-    URL.revokeObjectURL(url);
-    document.getElementById('webhookStatus').textContent = '📤 Logs exportados!';
-    document.getElementById('webhookStatus').style.color = 'var(--cyan)';
+    try {
+      const logs = JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY) || '[]');
+      const json = JSON.stringify(logs, null, 2);
+      const blob = new Blob([json], { type: 'application/json' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `gunslol_logs_${new Date().toISOString().slice(0,10)}.json`;
+      a.click();
+      URL.revokeObjectURL(url);
+    } catch { showToast('⚠️ Erro ao exportar'); }
+  });
+
+  // Refresh
+  document.getElementById('refreshLogs').addEventListener('click', function() {
+    this.textContent = '🔄 Atualizando...';
+    renderAdminLogs().then(() => {
+      this.textContent = '🔄 Atualizar';
+      showToast('✅ Logs atualizados!');
+    });
   });
 });
 
-// ---- INICIAR LOGGER QUANDO A PÁGINA CARREGAR ----
-// Aguarda um momento para não interferir com o loading
-setTimeout(() => {
-  registerVisit();
-}, 1000);
-
-// ============================================================
-// Efeito de neve (alterna matrix já implementado)
-// ============================================================
+// ---- Iniciar logger ----
+setTimeout(() => { registerVisit(); }, 1500);
 
 // ============================================================
 // FIM DO JAVASCRIPT
